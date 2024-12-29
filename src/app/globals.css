@@ -3,19 +3,520 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f7f4;
+  --foreground: #1a1a1a;
+  --card-background: #e5e5e5;
+  --card2-background: #ebebeb;
+  --card-border: #d1d1d1;
+  --button-bordercolor: #e2e1dd;
+  --muted-foreground: #71717a;
+  --skeleton-base-color: #e2e2e2;
+  --skeleton-highlight-color: #f0f0f0;
+
+  /* Base colors with variants */
+  --primary: #0070f3;
+  --primary-light: var(--primary-300);
+  --primary-dark: var(--primary-700);
+  --primary-hover: var(--primary-light);
+
+  --secondary: #7928ca;
+  --secondary-light: var(--secondary-300);
+  --secondary-dark: var(--secondary-700);
+
+  --accent: #00bcc6;
+  --accent-light: var(--accent-300);
+  --accent-dark: var(--accent-700);
+
+  /* Status colors */
+  --info: #0070f3;
+  --info-light: #3291ff;
+  --info-dark: #0050af;
+
+  --success: #22c55e;
+  --success-light: #4ade80;
+  --success-dark: #16a34a;
+
+  --warning: #f59e0b;
+  --warning-light: #fbbf24;
+  --warning-dark: #d97706;
+
+  --error: #ef4444;
+  --error-light: #f87171;
+  --error-dark: #dc2626;
+
+  --neutral-light: #d9dce3;
+  --neutral: #b4b9c4;
+  --neutral-dark: #8f96a3;
+}
+
+:root[class~="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card-background: #1d1d1d;
+  --card2-background: #2a2a2a;
+  --card-border: #333333;
+  --button-bordercolor: #333333;
+  --muted-foreground: #a1a1aa;
+  --primary-hover: var(--primary-dark);
+  --skeleton-base-color: #262626;
+  --skeleton-highlight-color: #303030;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([class~="light"]) {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --card-background: #1d1d1d;
+    --card2-background: #2a2a2a;
+    --card-border: #333333;
+    --button-bordercolor: #333333;
+    --muted-foreground: #a1a1aa;
+    --primary-hover: var(--primary-dark);
+    --skeleton-base-color: #262626;
+    --skeleton-highlight-color: #303030;
+
+    --neutral-light: #4d5259;
+    --neutral: #363a40;
+    --neutral-dark: #212426;
   }
+}
+
+:root {
+  transition:
+    all 0.2s ease-in-out,
+    --skeleton-base-color 0.2s ease-in-out,
+    --skeleton-highlight-color 0.2s ease-in-out;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}
+
+.border-secondary {
+  border-color: var(--secondary);
+}
+
+.border-accent {
+  border-color: var(--accent);
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--primary);
+}
+
+.hover\:bg-secondary:hover {
+  background-color: var(--secondary);
+}
+
+.hover\:bg-accent:hover {
+  background-color: var(--accent);
+}
+
+.color-transition {
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+button {
+  transition: all 0.2s ease-in-out;
+}
+/* Text Contrast Utilities */
+.text-contrast-primary {
+  color: var(--primary-contrast);
+}
+
+.text-contrast-secondary {
+  color: var(--secondary-contrast);
+}
+
+.text-contrast-accent {
+  color: var(--accent-contrast);
+}
+
+/* Color Scale Utilities */
+.bg-primary-100 {
+  background-color: var(--primary-100);
+}
+.bg-primary-200 {
+  background-color: var(--primary-200);
+}
+.bg-primary-300 {
+  background-color: var(--primary-300);
+}
+.bg-primary-400 {
+  background-color: var(--primary-400);
+}
+.bg-primary-500 {
+  background-color: var(--primary-500);
+}
+.bg-primary-600 {
+  background-color: var(--primary-600);
+}
+.bg-primary-700 {
+  background-color: var(--primary-700);
+}
+.bg-primary-800 {
+  background-color: var(--primary-800);
+}
+.bg-primary-900 {
+  background-color: var(--primary-900);
+}
+
+/* Additional Hover States */
+.hover\:text-primary:hover {
+  color: var(--primary);
+}
+
+.hover\:text-secondary:hover {
+  color: var(--secondary);
+}
+
+.hover\:text-accent:hover {
+  color: var(--accent);
+}
+
+.hover\:border-primary:hover {
+  border-color: var(--primary);
+}
+
+.hover\:border-secondary:hover {
+  border-color: var(--secondary);
+}
+
+.hover\:border-accent:hover {
+  border-color: var(--accent);
+}
+.color-scale-grid {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(40px, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: 0.5rem;
+}
+
+.color-swatch {
+  aspect-ratio: 1;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.color-swatch:hover {
+  transform: scale(1.05);
+}
+
+/* Status Color Backgrounds */
+.bg-info {
+  background-color: var(--info);
+}
+.bg-success {
+  background-color: var(--success);
+}
+.bg-warning {
+  background-color: var(--warning);
+}
+.bg-error {
+  background-color: var(--error);
+}
+
+/* Status Color Text */
+.text-info {
+  color: var(--info);
+}
+.text-success {
+  color: var(--success);
+}
+.text-warning {
+  color: var(--warning);
+}
+.text-error {
+  color: var(--error);
+}
+
+/* Status Color Borders */
+.border-info {
+  border-color: var(--info);
+}
+.border-success {
+  border-color: var(--success);
+}
+.border-warning {
+  border-color: var(--warning);
+}
+.border-error {
+  border-color: var(--error);
+}
+
+/* Status Color Hover States */
+.hover\:bg-info:hover {
+  background-color: var(--info);
+}
+.hover\:bg-success:hover {
+  background-color: var(--success);
+}
+.hover\:bg-warning:hover {
+  background-color: var(--warning);
+}
+.hover\:bg-error:hover {
+  background-color: var(--error);
+}
+
+.hover\:text-info:hover {
+  color: var(--info);
+}
+.hover\:text-success:hover {
+  color: var(--success);
+}
+.hover\:text-warning:hover {
+  color: var(--warning);
+}
+.hover\:text-error:hover {
+  color: var(--error);
+}
+
+.hover\:border-info:hover {
+  border-color: var(--info);
+}
+.hover\:border-success:hover {
+  border-color: var(--success);
+}
+.hover\:border-warning:hover {
+  border-color: var(--warning);
+}
+.hover\:border-error:hover {
+  border-color: var(--error);
+}
+
+/* Status Color Opacity Variants */
+.bg-info\/10 {
+  background-color: color-mix(in srgb, var(--info) 10%, transparent);
+}
+.bg-success\/10 {
+  background-color: color-mix(in srgb, var(--success) 10%, transparent);
+}
+.bg-warning\/10 {
+  background-color: color-mix(in srgb, var(--warning) 10%, transparent);
+}
+.bg-error\/10 {
+  background-color: color-mix(in srgb, var(--error) 10%, transparent);
+}
+.bg-primary\/10 {
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.bg-secondary\/10 {
+  background-color: color-mix(in srgb, var(--secondary) 10%, transparent);
+}
+.bg-accent\/10 {
+  background-color: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* Base Color Light/Dark Variants */
+.bg-primary-light {
+  background-color: var(--primary-light);
+}
+.bg-primary-dark {
+  background-color: var(--primary-dark);
+}
+
+.bg-secondary-light {
+  background-color: var(--secondary-light);
+}
+.bg-secondary-dark {
+  background-color: var(--secondary-dark);
+}
+
+.bg-accent-light {
+  background-color: var(--accent-light);
+}
+.bg-accent-dark {
+  background-color: var(--accent-dark);
+}
+
+/* Text Variants */
+.text-primary-light {
+  color: var(--primary-light);
+}
+.text-primary-dark {
+  color: var(--primary-dark);
+}
+
+.text-secondary-light {
+  color: var(--secondary-light);
+}
+.text-secondary-dark {
+  color: var(--secondary-dark);
+}
+
+.text-accent-light {
+  color: var(--accent-light);
+}
+.text-accent-dark {
+  color: var(--accent-dark);
+}
+
+/* Border Variants */
+.border-primary-light {
+  border-color: var(--primary-light);
+}
+.border-primary-dark {
+  border-color: var(--primary-dark);
+}
+
+.border-secondary-light {
+  border-color: var(--secondary-light);
+}
+.border-secondary-dark {
+  border-color: var(--secondary-dark);
+}
+
+.border-accent-light {
+  border-color: var(--accent-light);
+}
+.border-accent-dark {
+  border-color: var(--accent-dark);
+}
+/* Dark variant hover states */
+.hover\:bg-primary-dark:hover {
+  background-color: var(--primary-dark);
+}
+.hover\:bg-secondary-dark:hover {
+  background-color: var(--secondary-dark);
+}
+.hover\:bg-accent-dark:hover {
+  background-color: var(--accent-dark);
+}
+.hover\:bg-info-dark:hover {
+  background-color: var(--info-dark);
+}
+.hover\:bg-success-dark:hover {
+  background-color: var(--success-dark);
+}
+.hover\:bg-warning-dark:hover {
+  background-color: var(--warning-dark);
+}
+.hover\:bg-error-dark:hover {
+  background-color: var(--error-dark);
+}
+
+/* Dark variant border hover states */
+.hover\:border-primary-dark:hover {
+  border-color: var(--primary-dark);
+}
+.hover\:border-secondary-dark:hover {
+  border-color: var(--secondary-dark);
+}
+.hover\:border-accent-dark:hover {
+  border-color: var(--accent-dark);
+}
+.hover\:border-info-dark:hover {
+  border-color: var(--info-dark);
+}
+.hover\:border-success-dark:hover {
+  border-color: var(--success-dark);
+}
+.hover\:border-warning-dark:hover {
+  border-color: var(--warning-dark);
+}
+.hover\:border-error-dark:hover {
+  border-color: var(--error-dark);
+}
+/* Neutral Background */
+.bg-neutral {
+  background-color: var(--neutral);
+}
+.bg-neutral-light {
+  background-color: var(--neutral-light);
+}
+.bg-neutral-dark {
+  background-color: var(--neutral-dark);
+}
+
+/* Neutral Text */
+.text-neutral {
+  color: var(--neutral);
+}
+.text-neutral-light {
+  color: var(--neutral-light);
+}
+.text-neutral-dark {
+  color: var(--neutral-dark);
+}
+
+/* Neutral Borders */
+.border-neutral {
+  border-color: var(--neutral);
+}
+.border-neutral-light {
+  border-color: var(--neutral-light);
+}
+.border-neutral-dark {
+  border-color: var(--neutral-dark);
+}
+
+/* Neutral Hover States */
+.hover\:bg-neutral:hover {
+  background-color: var(--neutral);
+}
+.hover\:bg-neutral-dark:hover {
+  background-color: var(--neutral-dark);
+}
+.hover\:text-neutral:hover {
+  color: var(--neutral);
+}
+.hover\:border-neutral:hover {
+  border-color: var(--neutral);
+}
+
+/* Neutral Opacity Variant */
+.bg-neutral\/10 {
+  background-color: color-mix(in srgb, var(--neutral) 10%, transparent);
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-slow {
+  animation: gradient 8s ease infinite;
 }

@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WindPallete
+
+## About
+
+WindPallete is a powerful tool designed to help developers create and manage consistent color themes for their applications. After encountering countless paywalls while trying to create themes for our projects, we decided to build the tool we wished existed.
+
+That's why WindPallete is and always will be free, open source, and supported by the community.
+
+## Features
+
+- 🎨 **Advanced Color System**
+
+  - Complete color scale generation (50-950)
+  - Visual color picker with HSL controls
+  - Real-time component preview
+  - Multiple gradient types
+
+- 🧩 **Component Library**
+
+  - Pre-built UI components
+  - Live preview
+  - Dark/Light mode support
+  - Customizable variants
+
+- 📤 **Multiple Export Formats**
+  - Tailwind CSS config
+  - CSS Variables (HEX/RGB/HSL)
+  - SCSS variables
+  - Figma-compatible format
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18.x or higher
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+```
+git clone https://github.com/dmostoller/windpallete.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```cd windpallete
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Start the development server:
+   `npm run dev`
 
-## Learn More
+4. Open http://localhost:3000 in your browser
 
-To learn more about Next.js, take a look at the following resources:
+## Usage 🎨
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Choose Colors:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - Select your primary color using the intuitive color picker
+   - Add secondary and accent colors to complete your palette
+   - Fine-tune using HSL controls
 
-## Deploy on Vercel
+2. **Preview & Test:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - See live component previews
+   - Test in both light and dark modes
+   - Validate color contrast ratios
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Export & Implement:**
+   - Download your theme configuration
+   - Copy-paste ready-to-use code
+   - Import directly into your project
+
+## Contributing 🤝
+
+1. Fork the repository
+
+```
+(git checkout -b feature/AmazingFeature)
+```
+
+2. Commit your changes
+
+```
+(git commit -m 'Add some AmazingFeature')
+```
+
+3. Push to the branch
+
+```
+(git push origin feature/AmazingFeature)
+```
+
+4. Open a Pull Request
+
+## Community 👥
+
+Join our [Discord community](https://discord.gg/Gxh3ZzeXxQ) to:
+
+- 💡 Get help with your theme creation
+- 🎨 Share your beautiful themes
+- 💬 Discuss design and development
+- 📢 Stay updated on new features
+
+## License 📄
+
+This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LICENSE) file for details.
+
+## Support 🔧
+
+- 📧 **Email**: [dave.mostoller.dev@gmail.com](mailto:dave.mostoller.dev@gmail.com)
+- 💬 **Discord**: [Join our server](https://discord.gg/Gxh3ZzeXxQ)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/dmostoller/windpallete/issues)
+
+## Acknowledgments 🙏
+
+[![Next.js](https://img.shields.io/badge/Built%20with-Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Styled%20with-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Lucide](https://img.shields.io/badge/Icons%20by-Lucide-cyan?style=flat-square)](https://lucide.dev/)

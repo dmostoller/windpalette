@@ -1,20 +1,6 @@
+import { ThemeProvider } from "@/context/ThemeContext";
+import { SettingsProvider } from "@/context/SettingsContext";
 import type { Metadata } from "next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import ClientProviders from "@/components/ClientProvider";
-import Script from "next/script";
-import { Analytics } from "@vercel/analytics/react";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.windpalette.com"),
@@ -37,7 +23,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "WindPalette Team" }],
   creator: "WindPalette Team",
-  publisher: "WindPalette",
+  publisher: "WindpPalette",
   applicationName: "WindPalette CSS Theme Generator",
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
@@ -71,7 +57,7 @@ export const metadata: Metadata = {
     title: "WindPalette | Tailwind CSS Theme Generator - Free Open Source Design Tool",
     description: "Create beautiful, consistent color themes for your applications",
     images: ["/og-image.png"],
-    creator: "@WindPalette",
+    creator: "@windpalette",
   },
   icons: {
     icon: [{ url: "/favicon.ico" }, { url: "/icon.svg", type: "image/svg+xml" }],
@@ -98,32 +84,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const landingPageColors = {
+  primary: "#38B2AC",
+  secondary: "#A78BFA",
+  accent: "#006EDB",
+};
+
+export default function LandingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ClientProviders>{children}</ClientProviders>
-        <SpeedInsights />
-        <Analytics />
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=G-4T2HKY0PYY`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-4T2HKY0PYY');
-            `}
-          </Script>
-        </>
-      </body>
-    </html>
+    <SettingsProvider>
+      <ThemeProvider initialVisibleColors={3} initialColors={landingPageColors} previewMode>
+        {children}
+      </ThemeProvider>
+    </SettingsProvider>
   );
 }
