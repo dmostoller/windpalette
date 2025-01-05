@@ -78,19 +78,19 @@ npm install
 1. Fork the repository
 
 ```
-(git checkout -b feature/AmazingFeature)
+git checkout -b feature/AmazingFeature
 ```
 
 2. Commit your changes
 
 ```
-(git commit -m 'Add some AmazingFeature')
+git commit -m 'Add some AmazingFeature'
 ```
 
 3. Push to the branch
 
 ```
-(git push origin feature/AmazingFeature)
+git push origin feature/AmazingFeature
 ```
 
 4. Open a Pull Request
