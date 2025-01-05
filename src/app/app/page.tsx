@@ -38,6 +38,7 @@ import { DemoButton } from "@/components/buttons/DemoButton";
 import { GenerateRandomThemeButton } from "@/components/buttons/GenerateRandomThemeButton";
 import { useSettings } from "@/hooks/useSettings";
 import { DefaultTab } from "@/types/settings";
+import { SunIcon, MoonIcon, CogIcon } from "@/components/icons";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -48,16 +49,38 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<DefaultTab>(settings.defaultTab);
   const isSidebarCollapsed = settings.sidebarState === "collapsed";
 
+  type ThemeMode = "light" | "dark" | "system";
+  const [theme, setTheme] = useState<ThemeMode>("system");
+
   const toggleSidebar = () => {
     updateSettings({
       sidebarState: isSidebarCollapsed ? "expanded" : "collapsed",
     });
   };
 
-  // Sync with settings.defaultTab changes
+  useEffect(() => {
+    setTheme(settings.themeMode);
+    // console.log("Theme Mode", settings.themeMode);
+  }, [settings.themeMode]);
+
   useEffect(() => {
     setActiveTab(settings.defaultTab);
   }, [settings.defaultTab]);
+
+  const cycleTheme = () => {
+    const modes: ThemeMode[] = ["light", "dark", "system"];
+    const currentIndex = modes.indexOf(theme);
+    const nextTheme = modes[(currentIndex + 1) % modes.length];
+
+    setTheme(nextTheme);
+    if (nextTheme === "system") {
+      // Remove class to let system preference take over
+      document.documentElement.classList.remove("dark", "light");
+    } else {
+      document.documentElement.classList.remove("dark", "light");
+      document.documentElement.classList.add(nextTheme);
+    }
+  };
 
   const handleTabChange = (tabId: DefaultTab) => {
     setActiveTab(tabId);
@@ -233,6 +256,15 @@ export default function Home() {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold capitalize">{activeTab}</h2>
             <div className="flex items-center gap-4">
+              <button
+                onClick={cycleTheme}
+                className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 rounded-lg"
+                aria-label="Toggle theme"
+              >
+                {theme === "light" && <SunIcon />}
+                {theme === "dark" && <MoonIcon />}
+                {theme === "system" && <CogIcon />}
+              </button>
               <button
                 onClick={() => setIsSaveModalOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
