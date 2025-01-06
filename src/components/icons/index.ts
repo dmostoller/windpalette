@@ -1,3 +1,12 @@
 export { SunIcon } from "./sun";
 export { MoonIcon } from "./moon";
 export { CogIcon } from "./cog";
+export { UserIcon } from "./user";
+export { LayersIcon } from "./layers";
+export { SearchIcon } from "./search";
+export { CircleHelpIcon } from "./circle-help";
+export { ArchiveIcon } from "./archive";
+export { LayoutPanelTopIcon } from "./layout";
+export { SparklesIcon } from "./sparkles";
+export { CpuIcon } from "./cpu";
+export { SquareStackIcon } from "./square-stack";

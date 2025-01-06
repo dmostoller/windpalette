@@ -2,17 +2,16 @@ import React, { JSX } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft, Palette } from "lucide-react";
 import {
-  ChevronLeft,
-  Palette,
-  Layout,
-  Search,
-  Layers,
-  Square,
-  Library,
-  User,
-  HelpCircle,
-} from "lucide-react";
+  UserIcon,
+  LayersIcon,
+  SearchIcon,
+  CircleHelpIcon,
+  LayoutPanelTopIcon,
+  ArchiveIcon,
+  SquareStackIcon,
+} from "./icons";
 import AuthButton from "./buttons/AuthButton";
 import { DefaultTab } from "@/types/settings";
 
@@ -33,14 +32,14 @@ interface SidebarContentProps {
 }
 
 const navigationItems: NavigationItem[] = [
-  { id: "browse", icon: <Search className="w-5 h-5" /> },
+  { id: "browse", icon: <SearchIcon /> },
   { id: "colors", icon: <Palette className="w-5 h-5" /> },
-  { id: "components", icon: <Layout className="w-5 h-5" /> },
-  { id: "gradients", icon: <Layers className="w-5 h-5" /> },
-  { id: "buttons", icon: <Square className="w-5 h-5" /> },
-  { id: "saved themes", icon: <Library className="w-5 h-5" /> },
-  { id: "help", icon: <HelpCircle className="w-5 h-5" /> },
-  { id: "user", icon: <User className="w-5 h-5" /> },
+  { id: "components", icon: <LayoutPanelTopIcon /> },
+  { id: "gradients", icon: <LayersIcon /> },
+  { id: "buttons", icon: <SquareStackIcon /> },
+  { id: "saved themes", icon: <ArchiveIcon /> },
+  { id: "help", icon: <CircleHelpIcon /> },
+  { id: "user", icon: <UserIcon /> },
 ];
 
 export function SidebarContent({

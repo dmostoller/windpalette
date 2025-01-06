@@ -23,7 +23,7 @@ import { DemoButton } from "@/components/buttons/DemoButton";
 import { GenerateRandomThemeButton } from "@/components/buttons/GenerateRandomThemeButton";
 import { useSettings } from "@/hooks/useSettings";
 import { DefaultTab } from "@/types/settings";
-import { SunIcon, MoonIcon, CogIcon } from "@/components/icons";
+import { SunIcon, MoonIcon, CpuIcon } from "@/components/icons";
 import { Drawer } from "vaul";
 import { SidebarContent } from "@/components/SidebarContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -151,7 +151,7 @@ export default function Home() {
               >
                 {theme === "light" && <SunIcon />}
                 {theme === "dark" && <MoonIcon />}
-                {theme === "system" && <CogIcon />}
+                {theme === "system" && <CpuIcon />}
               </button>
               <button
                 onClick={() => setIsSaveModalOpen(true)}
