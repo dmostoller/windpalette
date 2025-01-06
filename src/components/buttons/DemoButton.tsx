@@ -29,10 +29,10 @@ export const DemoButton = ({ colors, gradients, visibleColors }: DemoButtonProps
     <button
       type="button"
       onClick={handleDemo}
-      className="flex items-center gap-2 px-4 py-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
+      className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
     >
-      <SquareArrowOutUpRight className="w-4 h-4" />
-      Demo
+      <SquareArrowOutUpRight className="w-5 h-5" />
+      <span className="hidden md:inline">Demo</span>
     </button>
   );
 };
