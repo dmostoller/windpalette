@@ -35,21 +35,23 @@ export default function UserPage() {
         </div>
       </div>
 
-      <div className="flex border-b border-[var(--card-border)] mb-8">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-6 py-3 border-b-2 ${
-              activeTab === tab.id
-                ? "border-[var(--primary)] text-[var(--primary)]"
-                : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-            }`}
-          >
-            <tab.icon className="w-5 h-5" />
-            {tab.label}
-          </button>
-        ))}
+      <div className="flex overflow-x-auto w-full border-b border-[var(--card-border)] mb-8 scrollbar-hide">
+        <div className="flex min-w-max">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-4 sm:px-6 py-3 border-b-2 whitespace-nowrap ${
+                activeTab === tab.id
+                  ? "border-[var(--primary)] text-[var(--primary)]"
+                  : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              }`}
+            >
+              <tab.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="mt-8">
