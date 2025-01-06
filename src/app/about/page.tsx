@@ -5,9 +5,9 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "WindPallete is a free, open-source design tool built by developers, for developers. Create beautiful color themes without restrictions.",
+    "WindPalette is a free, open-source design tool built by developers, for developers. Create beautiful color themes without restrictions.",
   openGraph: {
-    title: "About WindPallete",
+    title: "About WindPalette",
     description: "Learn about our mission to democratize design tooling",
   },
 };
@@ -17,7 +17,7 @@ export default function About() {
     <div className="min-h-screen bg-[var(--background)] p-4">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-[var(--text-primary)]">About WindPallete</h1>
+          <h1 className="text-4xl font-bold text-[var(--text-primary)]">About WindPalette</h1>
           <p className="text-lg text-[var(--text-secondary)]">
             A powerful and free Tailwind CSS theme generator built to make design accessible for everyone
           </p>
@@ -31,12 +31,12 @@ export default function About() {
             </div>
             <div className="space-y-4 text-[var(--text-secondary)]">
               <p>
-                WindPallete is a powerful tool designed to help developers create and manage consistent color
+                WindPalette is a powerful tool designed to help developers create and manage consistent color
                 themes without restrictions. After encountering countless paywalls while trying to create
                 themes for our projects, we decided to build the tool we wished existed.
               </p>
               <p>
-                That&apos;s why WindPallete is and always will be free, open source, and supported by the
+                That&apos;s why WindPalette is and always will be free, open source, and supported by the
                 community.
               </p>
             </div>
@@ -82,7 +82,7 @@ export default function About() {
               <h2 className="text-2xl font-semibold">Join Our Community</h2>
             </div>
             <div className="space-y-4 text-[var(--text-secondary)]">
-              <p>Connect with fellow WindPallete users in our friendly Discord community:</p>
+              <p>Connect with fellow WindPalette users in our friendly Discord community:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Get help with your theme creation</li>
                 <li>Share your beautiful themes with others</li>

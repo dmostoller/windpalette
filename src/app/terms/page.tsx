@@ -20,7 +20,7 @@ export default function TermsOfService() {
             </div>
             <div className="space-y-4 text-[var(--text-secondary)]">
               <p>
-                By accessing or using WindPallete, you agree to be bound by these Terms of Service. If you do
+                By accessing or using WindPalette, you agree to be bound by these Terms of Service. If you do
                 not agree to these terms, please do not use our service.
               </p>
               <p>
@@ -37,7 +37,7 @@ export default function TermsOfService() {
               <h2 className="text-2xl font-semibold">User Responsibilities</h2>
             </div>
             <div className="space-y-4 text-[var(--text-secondary)]">
-              <p>As a user of WindPallete, you agree to:</p>
+              <p>As a user of WindPalette, you agree to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Provide accurate and complete information when creating an account</li>
                 <li>Maintain the security of your account credentials</li>
@@ -55,7 +55,7 @@ export default function TermsOfService() {
             </div>
             <div className="space-y-4 text-[var(--text-secondary)]">
               <p>
-                The service and its original content, features, and functionality are owned by WindPallete and
+                The service and its original content, features, and functionality are owned by WindPalette and
                 are protected by international copyright, trademark, and other intellectual property laws.
               </p>
               <p>Themes you create:</p>
@@ -75,7 +75,7 @@ export default function TermsOfService() {
             </div>
             <div className="space-y-4 text-[var(--text-secondary)]">
               <p>
-                WindPallete is provided &quot;as is&quot; without any warranties, expressed or implied. We do
+                WindPalette is provided &quot;as is&quot; without any warranties, expressed or implied. We do
                 not warrant that:
               </p>
               <ul className="list-disc pl-6 space-y-2">

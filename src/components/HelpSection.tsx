@@ -8,7 +8,7 @@ export default function HelpSection() {
         <div className="p-8 border border-[var(--card-border)] rounded-lg bg-[var(--card-background)]">
           <h3 className="text-2xl font-bold mb-4">Read the Documentation</h3>
           <p className="text-[var(--muted-foreground)] mb-6">
-            Explore our comprehensive documentation to learn all about WindPallete&apos;s features,
+            Explore our comprehensive documentation to learn all about WindPalette&apos;s features,
             configuration options, and best practices for creating beautiful Tailwind themes.
           </p>
 
@@ -23,7 +23,7 @@ export default function HelpSection() {
         <div className="p-8 border border-[var(--card-border)] rounded-lg bg-[var(--card-background)]">
           <h3 className="text-2xl font-bold mb-4">Join Our Community</h3>
           <p className="text-[var(--muted-foreground)] mb-6">
-            Get help, share your themes, and connect with other WindPallete users in our friendly Discord
+            Get help, share your themes, and connect with other WindPalette users in our friendly Discord
             community. Whether you&apos;re just getting started or you&apos;re a Tailwind pro, everyone&apos;s
             welcome!
           </p>
@@ -41,13 +41,13 @@ export default function HelpSection() {
         <div className="p-8 border border-[var(--card-border)] rounded-lg bg-[var(--card-background)]">
           <h3 className="text-2xl font-bold mb-4">Contribute & Report Issues</h3>
           <p className="text-[var(--muted-foreground)] mb-6">
-            Help improve WindPallete by contributing to the project or reporting bugs. Whether you want to
+            Help improve WindPalette by contributing to the project or reporting bugs. Whether you want to
             submit a PR or create an issue, your feedback is valuable!
           </p>
 
           <div className="flex gap-3">
             <a
-              href="https://github.com/dmostoller/windpallete"
+              href="https://github.com/dmostoller/windpalette"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-3 bg-[#24292E] hover:bg-[#1B1F23] transition-colors rounded-lg text-white font-medium"
@@ -56,7 +56,7 @@ export default function HelpSection() {
               Contribute
             </a>
             <a
-              href="https://github.com/dmostoller/windpallete/issues/new"
+              href="https://github.com/dmostoller/windpalette/issues/new"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-3 bg-[#24292E] hover:bg-[#1B1F23] transition-colors rounded-lg text-white font-medium"

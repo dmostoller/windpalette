@@ -39,7 +39,7 @@ export function ShareThemeModal({ isOpen, onClose }: ShareThemeModalProps) {
 
   const shareOnTwitter = () => {
     const url = getThemeUrl();
-    const text = "Check out my theme created with WindPallete!";
+    const text = "Check out my theme created with WindPalette!";
     window.open(
       `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
       "_blank",

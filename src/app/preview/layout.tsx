@@ -25,10 +25,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Preview Your Theme - WindPallete",
+    title: "Preview Your Theme - WindPalette",
     description: "Preview and test your custom Tailwind CSS theme in real-time",
     images: ["https://www.windpalette.com/og-image.png"],
-    creator: "@windpallete",
+    creator: "@windpalette",
   },
   icons: {
     icon: "/favicon.ico",

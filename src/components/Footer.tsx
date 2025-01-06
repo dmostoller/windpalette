@@ -12,13 +12,13 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Image
-                src="/windpalletelogo.png"
-                alt="WindPallete Logo"
+                src="/windpalettelogo.png"
+                alt="WindPalette Logo"
                 width={32}
                 height={32}
                 className="rounded-lg"
               />
-              <h3 className="text-xl font-bold">WindPallete</h3>
+              <h3 className="text-xl font-bold">WindPalette</h3>
             </div>
             <p className="text-sm text-[var(--foreground)] opacity-70">
               Create beautiful Tailwind CSS color themes for your next project with ease.
@@ -114,7 +114,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-[var(--card-border)]">
           <p className="text-center text-sm text-[var(--foreground)] opacity-70">
-            © {new Date().getFullYear()} WindPallete. All rights reserved.
+            © {new Date().getFullYear()} WindPalette. All rights reserved.
           </p>
         </div>
       </div>

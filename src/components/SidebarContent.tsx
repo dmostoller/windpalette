@@ -69,8 +69,8 @@ export function SidebarContent({
         >
           <div className="flex items-center gap-2">
             <Image
-              src="/windpalletelogo.png"
-              alt="WindPallete Logo"
+              src="/windpalettelogo.png"
+              alt="WindPalette Logo"
               width={32}
               height={32}
               className="rounded-lg"
@@ -85,7 +85,7 @@ export function SidebarContent({
                 duration: 0.2,
               }}
             >
-              WindPallete
+              WindPalette
             </motion.h1>
           </div>
           <motion.p
