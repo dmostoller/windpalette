@@ -7,21 +7,8 @@ import PreviewComponents from "@/components/PreviewComponents";
 import CopyStatusColorsButton from "@/components/CopyStatusColorsButton";
 import CopyGradientsButton from "@/components/CopyGradientsButton";
 import { ShareThemeModal } from "@/components/ShareThemeModal";
-import AuthButton from "@/components/buttons/AuthButton";
 import PlusButton from "@/components/buttons/PlusButton";
-import {
-  ChevronLeft,
-  Palette,
-  Layout,
-  Save,
-  Search,
-  Layers,
-  Square,
-  Library,
-  User,
-  Share,
-  HelpCircle,
-} from "lucide-react";
+import { Menu, Save, Share } from "lucide-react";
 import HelpSection from "@/components/HelpSection";
 import PreviewButton from "@/components/PreviewButton";
 import GradientPreview from "@/components/GradientPreview";
@@ -31,13 +18,15 @@ import ThemeSettings from "@/components/user/ThemeSettings";
 import { ThemesList } from "@/components/ThemesList";
 import { useTheme } from "@/context/ThemeContext";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import UserPage from "@/components/user/UserPage";
-import Image from "next/image";
 import { DemoButton } from "@/components/buttons/DemoButton";
 import { GenerateRandomThemeButton } from "@/components/buttons/GenerateRandomThemeButton";
 import { useSettings } from "@/hooks/useSettings";
 import { DefaultTab } from "@/types/settings";
+import { SunIcon, MoonIcon, CogIcon } from "@/components/icons";
+import { Drawer } from "vaul";
+import { SidebarContent } from "@/components/SidebarContent";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -48,35 +37,42 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<DefaultTab>(settings.defaultTab);
   const isSidebarCollapsed = settings.sidebarState === "collapsed";
 
+  type ThemeMode = "light" | "dark" | "system";
+  const [theme, setTheme] = useState<ThemeMode>("system");
+
   const toggleSidebar = () => {
     updateSettings({
       sidebarState: isSidebarCollapsed ? "expanded" : "collapsed",
     });
   };
 
-  // Sync with settings.defaultTab changes
+  useEffect(() => {
+    setTheme(settings.themeMode);
+    // console.log("Theme Mode", settings.themeMode);
+  }, [settings.themeMode]);
+
   useEffect(() => {
     setActiveTab(settings.defaultTab);
   }, [settings.defaultTab]);
 
+  const cycleTheme = () => {
+    const modes: ThemeMode[] = ["light", "dark", "system"];
+    const currentIndex = modes.indexOf(theme);
+    const nextTheme = modes[(currentIndex + 1) % modes.length];
+
+    setTheme(nextTheme);
+    if (nextTheme === "system") {
+      // Remove class to let system preference take over
+      document.documentElement.classList.remove("dark", "light");
+    } else {
+      document.documentElement.classList.remove("dark", "light");
+      document.documentElement.classList.add(nextTheme);
+    }
+  };
+
   const handleTabChange = (tabId: DefaultTab) => {
     setActiveTab(tabId);
   };
-
-  const navigationItems = [
-    { id: "browse" as const, icon: <Search className="w-5 h-5" /> },
-    { id: "colors" as const, icon: <Palette className="w-5 h-5" /> },
-    { id: "components" as const, icon: <Layout className="w-5 h-5" /> },
-    { id: "gradients" as const, icon: <Layers className="w-5 h-5" /> },
-    { id: "buttons" as const, icon: <Square className="w-5 h-5" /> },
-    { id: "saved themes" as const, icon: <Library className="w-5 h-5" /> },
-    { id: "help" as const, icon: <HelpCircle className="w-5 h-5" /> },
-    {
-      id: "user" as const,
-      icon: <User className="w-5 h-5" />,
-      hidden: !session?.user,
-    },
-  ];
 
   const handleSaveTheme = async (name: string) => {
     const theme = {
@@ -98,133 +94,48 @@ export default function Home() {
 
   return (
     <div className="flex h-screen bg-[var(--background)]">
+      {/* Desktop Sidebar - hidden on mobile */}
       <motion.nav
         layout
-        className={`h-screen bg-[var(--card-background)] border-r border-[var(--card-border)] px-3 py-4 flex flex-col`}
+        className={`hidden md:flex h-screen bg-[var(--card-background)] border-r border-[var(--card-border)] px-3 py-4 flex-col`}
         animate={{
-          width: isSidebarCollapsed ? 64 : 256, // 16 -> 64px, 64 -> 256px
+          width: isSidebarCollapsed ? 64 : 256,
         }}
-        transition={{
-          duration: 0.2,
-          ease: "easeOut",
-        }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
       >
-        <div className="flex items-center justify-between mb-8 relative">
-          <motion.div
-            className="flex flex-col"
-            animate={{
-              opacity: isSidebarCollapsed ? 0 : 1,
-              width: isSidebarCollapsed ? 0 : "auto",
-            }}
-            transition={{
-              duration: 0.2,
-            }}
-          >
-            <div className="flex items-center gap-2">
-              <Image
-                src="/windpalletelogo.png"
-                alt="WindPallete Logo"
-                width={32}
-                height={32}
-                className="rounded-lg"
-              />
-              <motion.h1
-                layout
-                className="font-bold text-xl whitespace-nowrap overflow-hidden"
-                animate={{
-                  opacity: isSidebarCollapsed ? 0 : 1,
-                }}
-                transition={{
-                  duration: 0.2,
-                }}
-              >
-                WindPallete
-              </motion.h1>
-            </div>
-            <motion.p
-              layout
-              className="font-bold text-sm text-gray-600 whitespace-nowrap overflow-hidden mt-2"
-              animate={{
-                opacity: isSidebarCollapsed ? 0 : 1,
-              }}
-              transition={{
-                duration: 0.2,
-              }}
-            >
-              Tailwind Color Theme Builder
-            </motion.p>
-          </motion.div>
-          <motion.button
-            layout
-            onClick={toggleSidebar}
-            className={`min-w-[32px] flex items-center justify-center`}
-          >
-            <motion.div
-              animate={{
-                rotate: isSidebarCollapsed ? 180 : 0,
-              }}
-              transition={{
-                duration: 0.2,
-              }}
-            >
-              <ChevronLeft />
-            </motion.div>
-          </motion.button>
-        </div>
-        <div className="space-y-4 flex-1">
-          {navigationItems
-            .filter((item) => !item.hidden) // Filter out hidden items
-            .map((item) => (
-              <motion.button
-                layout
-                key={item.id}
-                onClick={() => handleTabChange(item.id)}
-                className={`w-full flex items-center rounded-lg
-          ${isSidebarCollapsed ? "justify-center px-3 py-2" : "justify-start px-4 py-3"}
-          ${activeTab === item.id ? "bg-[var(--primary)] text-white" : "hover:bg-[var(--primary-hover)] hover:bg-opacity-10"}`}
-              >
-                <div className="w-6 h-6 flex items-center justify-center">{item.icon}</div>
-                <motion.span
-                  layout
-                  className={`capitalize overflow-hidden whitespace-nowrap ${isSidebarCollapsed ? "" : "ml-3"}`}
-                  animate={{
-                    opacity: isSidebarCollapsed ? 0 : 1,
-                    x: isSidebarCollapsed ? -10 : 0,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
-                >
-                  {item.id}
-                </motion.span>
-              </motion.button>
-            ))}
-        </div>
-        <div>
-          <AuthButton isSidebarCollapsed={isSidebarCollapsed} setActiveTab={setActiveTab} />
-          <motion.div
-            className="mt-4 pt-4 border-t border-[var(--card-border)]"
-            animate={{
-              opacity: isSidebarCollapsed ? 0 : 1,
-            }}
-          >
-            <div className="flex justify-center gap-2 text-sm text-[var(--muted-foreground)]">
-              <Link href="/docs" className="hover:text-[var(--foreground)]">
-                Docs
-              </Link>
-              <Link href="/about" className="hover:text-[var(--foreground)]">
-                About
-              </Link>
-              <Link href="/privacy" className="hover:text-[var(--foreground)]">
-                Privacy
-              </Link>
-              <Link href="/terms" className="hover:text-[var(--foreground)]">
-                Terms
-              </Link>
-            </div>
-          </motion.div>
-        </div>
+        <SidebarContent
+          isSidebarCollapsed={isSidebarCollapsed}
+          handleTabChange={handleTabChange}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          toggleSidebar={toggleSidebar}
+          isLoggedIn={!!session?.user}
+        />
       </motion.nav>
+
+      {/* Mobile Drawer - visible only on mobile */}
+      <div className="md:hidden">
+        <Drawer.Root direction="left">
+          <Drawer.Trigger className="fixed bottom-4 left-4 p-3 rounded-full border border-[var(--card-border)] bg-[var(--card-background)] shadow-lg hover:bg-[var(--card-background-hover)] transition-all z-20">
+            <Menu className="w-8 h-8" />
+          </Drawer.Trigger>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+            <Drawer.Content className="fixed left-0 top-0 h-full w-[280px] bg-[var(--card-background)] p-4 z-50">
+              <Drawer.Title asChild>
+                <VisuallyHidden>Navigation Menu</VisuallyHidden>
+              </Drawer.Title>
+              <SidebarContent
+                isSidebarCollapsed={false}
+                handleTabChange={handleTabChange}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                isLoggedIn={!!session?.user}
+              />
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
+      </div>
 
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-y-auto">
@@ -232,13 +143,22 @@ export default function Home() {
           {/* Top Bar */}
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold capitalize">{activeTab}</h2>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 md:gap-4">
+              <button
+                onClick={cycleTheme}
+                className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 md:p-2.5 rounded-lg"
+                aria-label="Toggle theme"
+              >
+                {theme === "light" && <SunIcon />}
+                {theme === "dark" && <MoonIcon />}
+                {theme === "system" && <CogIcon />}
+              </button>
               <button
                 onClick={() => setIsSaveModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
+                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
               >
-                <Save className="w-4 h-4" />
-                Save Theme
+                <Save className="w-5 h-5" />
+                <span className="hidden md:inline">Save Theme</span>
               </button>
               <DemoButton
                 colors={{
@@ -268,10 +188,10 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setIsShareModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
+                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
               >
-                <Share className="w-4 h-4" />
-                Share
+                <Share className="w-5 h-5" />
+                <span className="hidden md:inline">Share</span>
               </button>
             </div>
           </div>

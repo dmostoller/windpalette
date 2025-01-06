@@ -259,41 +259,39 @@ module.exports = {
         <section id="components-usage">
           <h2 className="text-2xl font-bold mb-4">Usage Examples</h2>
           <div className="space-y-4">
+            <h3 className="font-medium mb-2">Gradient Card</h3>
             <div className="p-4 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
-              <h3 className="font-medium mb-2">Gradient Card</h3>
-              <pre className="text-sm bg-[var(--background)] p-4 rounded-md">
-                <code>{`<div className="bg-gradient-to-r from-[var(--gradient-color-0)] to-[var(--gradient-color-1)] p-6 rounded-xl">
+              <pre className="text-sm p-4 rounded-md overflow-x-auto whitespace-pre max-w-full">
+                <code className="block">{`<div className="bg-gradient-to-r from-[var(--gradient-color-0)] to-[var(--gradient-color-1)] p-6 rounded-xl">
   <h2 className="text-white text-4xl font-semibold">Title</h2>
   <p className="text-white/80">Description</p>
 </div>`}</code>
               </pre>
             </div>
-
+            <h3 className="font-medium mb-2">Image Overlay</h3>
             <div className="p-4 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
-              <h3 className="font-medium mb-2">Image Overlay</h3>
-              <pre className="text-sm bg-[var(--background)] p-4 rounded-md">
-                <code>{`<div className="relative rounded-xl overflow-hidden group">
+              <pre className="text-sm p-4 rounded-md overflow-x-auto whitespace-pre max-w-full">
+                <code className="block">{`<div className="relative rounded-xl overflow-hidden group">
   <Image src="..." alt="..." className="w-full h-full object-cover" />
   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
 </div>`}</code>
               </pre>
             </div>
+            <h3 className="font-medium mb-2">Standard Button</h3>
             <div className="p-4 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
-              <h3 className="font-medium mb-2">Standard Button</h3>
-              <pre className="text-sm bg-[var(--background)] p-4 rounded-md">
-                <code>{`<button 
+              <pre className="text-sm p-4 rounded-md overflow-x-auto whitespace-pre max-w-full">
+                <code className="block">{`<button 
   className="bg-primary text-white px-4 py-2 rounded-md font-medium
-    hover:bg-primary-dark focus:ring-2 focus:ring-primary-500"
+  hover:bg-primary-dark focus:ring-2 focus:ring-primary-500"
 >
   Button Text
 </button>`}</code>
               </pre>
             </div>
-
+            <h3 className="font-medium mb-2">Icon Button</h3>
             <div className="p-4 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
-              <h3 className="font-medium mb-2">Icon Button</h3>
-              <pre className="text-sm bg-[var(--background)] p-4 rounded-md">
-                <code>{`<button 
+              <pre className="text-sm p-4 rounded-md overflow-x-auto whitespace-pre max-w-full">
+                <code className="block">{`<button 
   className="p-2 rounded-lg bg-primary hover:bg-primary-dark text-white"
 >
   <Icon size={22} />
@@ -320,9 +318,8 @@ module.exports = {
             Customize gradients with up to three color stops:
           </p>
           <div className="bg-[var(--card-background)] p-4 rounded-lg border border-[var(--card-border)]">
-            <pre className="text-sm">
-              <code>{`// CSS Custom Properties
-:root {
+            <pre className="text-sm p-4 rounded-md overflow-x-auto whitespace-pre max-w-full">
+              <code className="block">{`:root {
   --gradient-color-0: #primary;
   --gradient-color-1: #secondary;
   --gradient-color-2: #accent;  // Optional third color
@@ -335,13 +332,13 @@ module.exports = {
           <h2 className="text-2xl font-bold mb-4">Usage Examples</h2>
           <div className="space-y-4">
             <h3 className="font-medium">Linear Gradient</h3>
-            <pre className="bg-[var(--card-background)] p-4 rounded-lg text-sm mb-6">
-              <code>{`<div className="bg-gradient-to-r from-[var(--gradient-color-0)] to-[var(--gradient-color-1)]" />`}</code>
+            <pre className="text-sm bg-[var(--card-background)] p-4 rounded-md overflow-x-auto whitespace-pre max-w-full">
+              <code className="block">{`<div className="bg-gradient-to-r from-[var(--gradient-color-0)] to-[var(--gradient-color-1)]" />`}</code>
             </pre>
 
             <h3 className="font-medium">Radial Gradient</h3>
-            <pre className="bg-[var(--card-background)] p-4 rounded-lg text-sm">
-              <code>{`<div className="bg-[--radial-gradient]" />`}</code>
+            <pre className="text-sm bg-[var(--card-background)] p-4 rounded-md overflow-x-auto whitespace-pre max-w-full">
+              <code className="block">{`<div className="bg-[--radial-gradient]" />`}</code>
             </pre>
           </div>
         </section>
@@ -381,7 +378,7 @@ module.exports = {
           <div className="space-y-6">
             <div className="space-y-2">
               <h3 className="font-medium">Tailwind CSS</h3>
-              <pre className="bg-[var(--card-background)] p-4 rounded-lg text-sm">
+              <pre className="bg-[var(--card-background)] p-4 rounded-lg text-sm overflow-x-auto">
                 <code>{`// tailwind.config.js
 module.exports = {
   theme: {
@@ -397,7 +394,7 @@ module.exports = {
 
             <div className="space-y-2">
               <h3 className="font-medium">CSS Variables</h3>
-              <pre className="bg-[var(--card-background)] p-4 rounded-lg text-sm">
+              <pre className="bg-[var(--card-background)] p-4 rounded-lg text-sm overflow-x-auto">
                 <code>{`:root {
   /* Paste your exported CSS variables here */
 }`}</code>

@@ -15,18 +15,26 @@ export default function UserThemes() {
   return (
     <div className="space-y-8">
       {/* Stats Header */}
-      <div className="grid grid-cols-3 gap-6">
-        <div className="bg-[var(--card-background)] p-6 rounded-lg border border-[var(--card-border)]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="bg-[var(--card-background)] p-4 sm:p-6 rounded-lg border border-[var(--card-border)]">
           <h4 className="text-sm text-[var(--text-secondary)]">Total Themes</h4>
-          <p className="text-3xl font-bold">{themes.length}</p>
+          <p className="text-2xl sm:text-3xl font-bold">{themes.length}</p>
         </div>
-        <div className="bg-[var(--card-background)] p-6 rounded-lg border border-[var(--card-border)]">
+        <div className="bg-[var(--card-background)] p-4 sm:p-6 rounded-lg border border-[var(--card-border)]">
           <h4 className="text-sm text-[var(--text-secondary)]">Most Used</h4>
-          <p className="text-lg font-medium">{themes[0]?.name || "No themes"}</p>
+          <p className="text-base sm:text-lg font-medium truncate">{themes[0]?.name || "No themes"}</p>
         </div>
-        <div className="bg-[var(--card-background)] p-6 rounded-lg border border-[var(--card-border)]">
+        <div className="bg-[var(--card-background)] p-4 sm:p-6 rounded-lg border border-[var(--card-border)]">
           <h4 className="text-sm text-[var(--text-secondary)]">Last Created</h4>
-          <p className="text-lg font-medium">{new Date(themes[0]?.createdAt || "").toLocaleDateString()}</p>
+          <p className="text-base sm:text-lg font-medium">
+            {themes[0]?.createdAt
+              ? new Date(themes[0].createdAt).toLocaleDateString(undefined, {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })
+              : "-"}
+          </p>
         </div>
       </div>
 

@@ -117,7 +117,7 @@ const PreviewComponents = () => {
         <div className="flex justify-center items-center gap-4">
           <h3 className="text-lg font-medium">Gradient Variants</h3>
           <select
-            className="w-48 p-2 rounded-lg border bg-[var(--card2-background)] border-[var(--card-border)]"
+            className="w-48 p-2 rounded-lg border bg-[var(--card2-background)] border-[var(--card-border)] mr-2"
             value={selectedVariant.name}
             onChange={(e) => {
               const variant = GRADIENT_VARIANTS.find((v) => v.name === e.target.value);
@@ -136,7 +136,7 @@ const PreviewComponents = () => {
             ))}
           </select>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <button
             onClick={() => setViewMode("grid")}
             className={`p-2 rounded ${viewMode === "grid" ? "bg-primary text-white" : "bg-[var(--card-background)]"}`}

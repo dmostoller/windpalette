@@ -25,8 +25,10 @@ export const metadata: Metadata = {
   description:
     "Create beautiful, consistent color themes for your applications. Free, open-source design tool with automatic color scale generation, gradient creation, and multiple export options.",
   keywords: [
+    "tailwind theme generator",
     "theme generator",
     "color palette",
+    "theme builder",
     "design tool",
     "tailwind css",
     "css generator",

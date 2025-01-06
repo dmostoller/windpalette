@@ -92,14 +92,14 @@ export function ShareThemeModal({ isOpen, onClose }: ShareThemeModalProps) {
               className="flex items-center gap-2 px-4 py-2 bg-[#1DA1F2] text-white rounded-lg hover:bg-[#1a8cd8] transition-colors"
             >
               <Twitter className="w-4 h-4" />
-              Share on Twitter
+              Share<span className="hidden md:inline"> on Twitter</span>
             </button>
             <button
               onClick={openPreview}
               className="flex items-center gap-2 px-4 py-2 border border-[var(--border)] rounded-lg hover:bg-[var(--background)] transition-colors"
             >
               <Link className="w-4 h-4" />
-              Open Preview
+              <span className="hidden md:inline">Open</span> Preview
             </button>
           </div>
         </div>
