@@ -109,6 +109,7 @@ export default function Home() {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           toggleSidebar={toggleSidebar}
+          isLoggedIn={!!session?.user}
         />
       </motion.nav>
 
@@ -129,6 +130,7 @@ export default function Home() {
                 handleTabChange={handleTabChange}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
+                isLoggedIn={!!session?.user}
               />
             </Drawer.Content>
           </Drawer.Portal>

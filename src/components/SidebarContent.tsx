@@ -29,6 +29,7 @@ interface SidebarContentProps {
   setActiveTab: (tab: DefaultTab) => void;
   toggleSidebar?: () => void;
   showToggle?: boolean;
+  isLoggedIn?: boolean;
 }
 
 const navigationItems: NavigationItem[] = [
@@ -49,7 +50,11 @@ export function SidebarContent({
   setActiveTab,
   toggleSidebar,
   showToggle = true,
+  isLoggedIn = false,
 }: SidebarContentProps) {
+  const visibleNavigationItems = navigationItems.filter(
+    (item) => !item.hidden && (item.id !== "user" || isLoggedIn),
+  );
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center justify-between mb-8 relative">
@@ -118,7 +123,7 @@ export function SidebarContent({
       </div>
 
       <div className="space-y-4 flex-1">
-        {navigationItems
+        {visibleNavigationItems
           .filter((item) => !item.hidden)
           .map((item) => (
             <motion.button
