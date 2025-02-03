@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Palette, Wand, Layout, Share } from "lucide-react";
+import { Split, Palette, Wand2, Layout, Share } from "lucide-react";
 import Link from "next/link";
 import SnowParticles from "@/components/SnowParticles";
 import { SparklesIcon } from "./icons/sparkles";
@@ -95,7 +95,7 @@ export default function LandingPage() {
                 color: "var(--primary)",
               },
               {
-                icon: <Wand className="w-12 h-12" />,
+                icon: <Wand2 className="w-12 h-12" />,
                 title: "Auto Generate",
                 description: "Create harmonious color schemes automatically",
                 gradient: "linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)",
@@ -149,66 +149,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      {/* <section className="py-20 bg-[var(--card)] mb-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16">What Users Say</h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                quote:
-                  "This tool transformed how I approach color selection. The live preview feature is a game-changer.",
-                author: "Sarah Chen",
-                role: "UI Designer",
-              },
-              {
-                quote:
-                  "Finally, a color tool that understands what developers need. Export formats are perfect for my workflow.",
-                author: "Michael Rodriguez",
-                role: "Frontend Developer",
-              },
-              {
-                quote:
-                  "The auto-generate feature saved me hours of work. Highly recommend for any design project.",
-                author: "Emma Thompson",
-                role: "Art Director",
-              },
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                className="p-8 rounded-xl bg-[var(--background)] border border-[var(--card-border)] relative group overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div
-                  className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-300"
-                  style={{
-                    background:
-                      index === 0
-                        ? "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)"
-                        : index === 1
-                          ? "linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)"
-                          : "linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%)",
-                    maskImage: "linear-gradient(to bottom, transparent, black 85%)",
-                    WebkitMaskImage: "linear-gradient(to bottom, transparent, black 85%)",
-                  }}
-                />
-                <div className="relative z-10">
-                  <p className="text-lg mb-6 text-[var(--foreground)] opacity-80">"{testimonial.quote}"</p>
-                  <div>
-                    <p className="font-semibold">{testimonial.author}</p>
-                    <p className="text-sm text-[var(--foreground)] opacity-70">{testimonial.role}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
       {/* How It Works Section */}
       <section className="py-32 bg-[var(--background)] relative overflow-hidden">
         {/* Enhanced Background Effect */}
@@ -240,19 +180,19 @@ export default function LandingPage() {
             {[
               {
                 step: "1",
-                title: "Choose Your First Color",
+                title: "Choose Your Method",
                 description:
-                  "Start by selecting your primary color using our intuitive color picker or input a specific hex code.",
-                icon: <Palette className="w-12 h-12" />,
+                  "Select colors manually with our color picker, or instantly generate a complete theme using AI.",
+                icon: <Split className="w-12 h-12" />,
                 color: "var(--primary)",
                 gradient: "from-[var(--primary)] to-[var(--secondary)]",
               },
               {
                 step: "2",
-                title: "Add More Colors",
+                title: "Customize & Preview",
                 description:
-                  "Optionally add up to two more colors to create a complete theme palette for your project.",
-                icon: <Wand className="w-12 h-12" />,
+                  "Fine-tune your colors or try different AI-generated themes until you find the perfect combination.",
+                icon: <Wand2 className="w-12 h-12" />,
                 color: "var(--secondary)",
                 gradient: "from-[var(--secondary)] to-[var(--accent)]",
               },
@@ -260,7 +200,7 @@ export default function LandingPage() {
                 step: "3",
                 title: "Export & Use",
                 description:
-                  "Get your color scales and gradients in Tailwind config format or CSS variables, ready to use.",
+                  "Get your theme in Tailwind config format or CSS variables, ready to use in your project.",
                 icon: <Share className="w-12 h-12" />,
                 color: "var(--accent)",
                 gradient: "from-[var(--accent)] to-[var(--primary)]",
@@ -432,7 +372,7 @@ export default function LandingPage() {
                   </p>
                   <div className="flex items-center justify-center gap-4 text-xs text-[var(--muted-foreground)]">
                     <span className="flex items-center">
-                      <Wand className="w-4 h-4 mr-1" /> Auto Generate
+                      <Wand2 className="w-4 h-4 mr-1" /> Auto Generate
                     </span>
                     <span className="flex items-center">
                       <Layout className="w-4 h-4 mr-1" /> Live Preview
