@@ -118,13 +118,13 @@ Ensure all colors are valid 6-digit hex codes.`;
 export async function POST(request: Request) {
   const ip = getIpAddress(request);
 
-  // Rate limiting
-  const { success } = await rateLimit.limit(ip);
-  if (!success) {
-    return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
-  }
-
   try {
+    // Rate limiting
+    const { success } = await rateLimit.limit(ip);
+    if (!success) {
+      throw new Error("Too many requests. Please try again later.");
+    }
+
     const { keywords } = await request.json();
 
     if (!keywords || typeof keywords !== "string") {
@@ -149,6 +149,12 @@ export async function POST(request: Request) {
     return NextResponse.json(response);
   } catch (error) {
     console.error("Palette generation error:", error);
+
+    if (error instanceof Error) {
+      const status = error.message.includes("Too many requests") ? 429 : 500;
+      return NextResponse.json({ error: error.message }, { status });
+    }
+
     return NextResponse.json({ error: "Failed to generate palette" }, { status: 500 });
   }
 }

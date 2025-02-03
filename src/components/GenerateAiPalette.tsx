@@ -19,9 +19,12 @@ export default function GenerateAiPalette() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ keywords: input }),
       });
-      if (!res.ok) throw new Error("Failed to generate palette");
+
       const data = await res.json();
 
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to generate palette");
+      }
       // Format colors to use base values
       const formattedColors = {
         primary: data.colors.primary.base,
