@@ -90,38 +90,89 @@ module.exports = {
         <section id="colors-color-system">
           <h2 className="text-3xl font-bold mb-4">Color System</h2>
           <p className="text-[var(--text-secondary)] mb-6">
-            Our color system provides two powerful ways to create your perfect color palette:
+            Our color system provides three powerful ways to create your perfect color palette:
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
               <h3 className="text-xl font-medium mb-3">Browse Predefined Colors</h3>
               <p className="text-[var(--text-secondary)] mb-4">
-                Choose from hundreds of carefully crafted color scales, organized by color families:
+                Choose from dozens of carefully crafted color scales:
               </p>
               <ul className="list-disc pl-6 text-[var(--text-secondary)]">
                 <li>Varied color families</li>
                 <li>Multiple shades per color</li>
-                <li>Instant preview of full color scale</li>
-                <li>One-click application to your theme</li>
+                <li>Instant preview of full scale</li>
+                <li>One-click application</li>
               </ul>
             </div>
-
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">Theme Generation</h3>
+              <p className="text-[var(--text-secondary)] mb-4">Create complete themes instantly:</p>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>AI-powered generation</li>
+                <li>Preset theme options</li>
+                <li>Custom theme builder</li>
+                <li>Gradient suggestions</li>
+              </ul>
+            </div>
             <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
               <h3 className="text-xl font-medium mb-3">Custom Color Picker</h3>
-              <p className="text-[var(--text-secondary)] mb-4">
-                Fine-tune your colors with our advanced color picker:
-              </p>
+              <p className="text-[var(--text-secondary)] mb-4">Fine-tune your colors with precision:</p>
               <ul className="list-disc pl-6 text-[var(--text-secondary)]">
                 <li>HSL slider controls</li>
                 <li>Live preview</li>
-                <li>Hex code display</li>
-                <li>Optional gradient integration</li>
+                <li>Hex code input</li>
+                <li>Color scale generation</li>
               </ul>
             </div>
           </div>
         </section>
 
+        <section id="colors-ai-generation">
+          <h2 className="text-3xl font-bold mb-4">AI Theme Generation</h2>
+          <p className="text-[var(--text-secondary)] mb-6">
+            Generate unique color palettes using AI by describing any scene, mood, or style.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">How It Works</h3>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Enter any descriptive text prompt</li>
+                <li>AI analyzes the mood and context</li>
+                <li>Generates harmonious color combinations</li>
+                <li>Automatically creates matching gradients</li>
+              </ul>
+            </div>
+
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">Example Prompts</h3>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Sunset in Hawaii</li>
+                <li>Cyberpunk city at night</li>
+                <li>Forest in autumn</li>
+                <li>Modern minimalist design</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-[var(--card-background)] rounded-lg border border-[var(--card-border)] p-6">
+            <h3 className="text-xl font-medium mb-3">Features</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Instant palette generation</li>
+                <li>Contextually aware color matching</li>
+                <li>Real-time preview</li>
+              </ul>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Gradient suggestions</li>
+                <li>One-click application</li>
+                <li>Rate limit: 5 requests per minute</li>
+              </ul>
+            </div>
+          </div>
+        </section>
         <section id="colors-color-scales">
           <h2 className="text-2xl font-bold mb-4">Color Scales</h2>
           <p className="text-[var(--text-secondary)] mb-6">
@@ -137,6 +188,7 @@ module.exports = {
             ))}
           </div>
         </section>
+
         <section id="colors-color-customization">
           <h2 className="text-3xl font-bold mb-4">Color Customization</h2>
           <p className="text-[var(--text-secondary)] mb-6">

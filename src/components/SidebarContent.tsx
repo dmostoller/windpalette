@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, Palette } from "lucide-react";
@@ -153,27 +153,45 @@ export function SidebarContent({
 
       <div>
         <AuthButton isSidebarCollapsed={isSidebarCollapsed} setActiveTab={setActiveTab} />
-        <motion.div
-          className="mt-4 pt-4 border-t border-[var(--card-border)]"
-          animate={{
-            opacity: isSidebarCollapsed ? 0 : 1,
-          }}
-        >
-          <div className="flex justify-center gap-2 text-sm text-[var(--muted-foreground)]">
-            <Link href="/docs" className="hover:text-[var(--foreground)]">
-              Docs
-            </Link>
-            <Link href="/about" className="hover:text-[var(--foreground)]">
-              About
-            </Link>
-            <Link href="/privacy" className="hover:text-[var(--foreground)]">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-[var(--foreground)]">
-              Terms
-            </Link>
-          </div>
-        </motion.div>
+        <AnimatePresence mode="wait">
+          {!isSidebarCollapsed && (
+            <motion.div
+              className="mt-4 pt-4 border-t border-[var(--card-border)]"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{
+                opacity: 1,
+                height: "auto",
+                transition: {
+                  height: { delay: 0, duration: 0.4 },
+                  opacity: { delay: 0.4, duration: 0.2 },
+                },
+              }}
+              exit={{
+                opacity: 0,
+                height: 0,
+                transition: {
+                  opacity: { duration: 0 },
+                  height: { duration: 0 },
+                },
+              }}
+            >
+              <div className="flex justify-center gap-2 text-sm text-[var(--muted-foreground)]">
+                <Link href="/docs" className="hover:text-[var(--foreground)]">
+                  Docs
+                </Link>
+                <Link href="/about" className="hover:text-[var(--foreground)]">
+                  About
+                </Link>
+                <Link href="/privacy" className="hover:text-[var(--foreground)]">
+                  Privacy
+                </Link>
+                <Link href="/terms" className="hover:text-[var(--foreground)]">
+                  Terms
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { motion } from "framer-motion";
 import UserPage from "@/components/user/UserPage";
 import { DemoButton } from "@/components/buttons/DemoButton";
-import { GenerateRandomThemeButton } from "@/components/buttons/GenerateRandomThemeButton";
+import { GenerateRandomThemeButton } from "@/components/GenerateRandomTheme";
 import { useSettings } from "@/hooks/useSettings";
 import { DefaultTab } from "@/types/settings";
 import { SunIcon, MoonIcon, CpuIcon } from "@/components/icons";

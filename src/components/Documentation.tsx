@@ -35,6 +35,7 @@ const DOCUMENTATION_SECTIONS = [
     title: "Colors",
     subsections: [
       { id: "color-system", title: "Color System" },
+      { id: "ai-generation", title: "AI Theme Generation" },
       { id: "color-scales", title: "Color Scales" },
       { id: "color-customization", title: "Customization" },
     ],
