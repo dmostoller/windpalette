@@ -149,18 +149,25 @@ function AppContent() {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold capitalize">{activeTab}</h2>
             <div className="flex items-center gap-1 md:gap-4">
-              <button
-                onClick={cycleTheme}
-                className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 md:p-2.5 rounded-lg"
-                aria-label="Toggle theme"
-              >
-                {theme === "light" && <SunIcon />}
-                {theme === "dark" && <MoonIcon />}
-                {theme === "system" && <CpuIcon />}
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={cycleTheme}
+                  className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 md:p-2.5 rounded-lg"
+                  aria-label="Toggle theme"
+                >
+                  {theme === "light" && <SunIcon />}
+                  {theme === "dark" && <MoonIcon />}
+                  {theme === "system" && <CpuIcon />}
+                </button>
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+                  {`Theme: ${theme.charAt(0).toUpperCase() + theme.slice(1)}`}
+                </div>
+              </div>
               <button
                 onClick={() => setIsSaveModalOpen(true)}
-                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
+                disabled={!session?.user}
+                title="Save Theme"
+                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
               >
                 <Save className="w-5 h-5" />
                 <span className="hidden md:inline">Save Theme</span>
