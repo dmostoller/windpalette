@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s | Theme Generator",
   },
   description:
-    "Create beautiful, consistent color themes for your applications. Free, open-source design tool with automatic color scale generation, gradient creation, and multiple export options.",
+    "Create beautiful, consistent color themes for your applications using AI or manual tools. Free, open-source design tool with AI theme generation, automatic color scale generation, gradient creation, and multiple export options.",
   keywords: [
     "theme generator",
     "color palette",
@@ -20,6 +20,11 @@ export const metadata: Metadata = {
     "gradient generator",
     "color scales",
     "open source",
+    "ai color generator",
+    "ai theme generator",
+    "ai design tool",
+    "ai color palette",
+    "ai color scheme",
   ],
   authors: [{ name: "WindPalette Team" }],
   creator: "WindPalette Team",
@@ -42,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "WindPalette",
     title: "WindPalette | Tailwind CSS Theme Generator - Free Open Source Design Tool",
     description:
-      "Create beautiful, consistent color themes for your applications. Free, open-source design tool with automatic color scale generation.",
+      "Create beautiful, consistent color themes for your applications using AI or manual tools. Free, open-source design tool with AI theme generation and automatic color scale generation.",
     images: [
       {
         url: "/og-image.png",
@@ -55,7 +60,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "WindPalette | Tailwind CSS Theme Generator - Free Open Source Design Tool",
-    description: "Create beautiful, consistent color themes for your applications",
+    description: "Create beautiful, consistent color themes for your applications using AI or manual tools",
     images: ["/og-image.png"],
     creator: "@windpalette",
   },

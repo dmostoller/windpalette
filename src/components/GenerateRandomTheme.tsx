@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { generateRandomTheme } from "@/utils/theme";
 import { colorFamilies } from "@/lib/colors";
-import GenerateAiPalette from "@/components/GenerateAiPalette";
 
 interface ThemePreferences {
   baseColor: "warm" | "cool" | "neutral";
@@ -30,17 +29,7 @@ export function GenerateRandomThemeButton() {
   };
 
   return (
-    <div className="space-y-6 p-4 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg">
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-2">
-          <h3 className="text-lg font-semibold">AI Theme Generation</h3>
-          <div className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">Fast & Easy</div>
-        </div>
-        <p className="text-sm text-[var(--muted-foreground)]">
-          Simply describe your desired theme using keywords, and AI will generate a matching color palette.
-        </p>
-        <GenerateAiPalette />
-      </div>
+    <div className="space-y-6">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-[var(--card-border)]"></div>
