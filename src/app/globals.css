@@ -520,3 +520,7 @@ button {
 .animate-gradient-slow {
   animation: gradient 8s ease infinite;
 }
+
+html {
+  scroll-behavior: smooth;
+}

@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { Wand2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useRouter } from "next/navigation";
 
-export default function GenerateAiPalette() {
+interface GenerateAiPaletteProps {
+  initialPrompt?: string;
+}
+
+export default function GenerateAiPalette({ initialPrompt = "" }: GenerateAiPaletteProps) {
   const { setThemeColors } = useTheme();
-  const [input, setInput] = useState("");
+  const router = useRouter();
+  const [input, setInput] = useState(initialPrompt);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -41,6 +48,7 @@ export default function GenerateAiPalette() {
 
       setInput("");
       toast.success("Theme generated successfully!");
+      router.replace("/app");
     } catch (e: unknown) {
       const errorMessage = e instanceof Error ? e.message : "An unexpected error occurred";
       setError(errorMessage);
@@ -50,17 +58,22 @@ export default function GenerateAiPalette() {
     }
   };
 
+  if (initialPrompt && !loading && !error) {
+    handleGenerate();
+  }
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <label htmlFor="aiPrompt" className="block text-sm font-medium">
-          AI Theme Generation
-        </label>
+        <VisuallyHidden>
+          <label htmlFor="aiPrompt">AI Theme Generation</label>
+        </VisuallyHidden>
         <div className="flex gap-2">
           <input
             id="aiPrompt"
             type="text"
             value={input}
+            disabled={loading}
             onChange={(e) => setInput(e.target.value)}
             placeholder="e.g. sunset in hawaii, cyberpunk city..."
             className="flex-1 p-2 rounded-md border border-[var(--card-border)] bg-[var(--background)]"

@@ -1,5 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import ColorPicker from "@/components/ColorPicker";
 import ColorScale from "@/components/ColorScale";
@@ -27,10 +29,13 @@ import { SunIcon, MoonIcon, CpuIcon } from "@/components/icons";
 import { Drawer } from "vaul";
 import { SidebarContent } from "@/components/SidebarContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import GenerateAiPalette from "@/components/GenerateAiPalette";
 
-export default function Home() {
+function AppContent() {
   const { data: session } = useSession();
   const { settings, updateSettings } = useSettings();
+  const searchParams = useSearchParams();
+  const prompt = searchParams.get("prompt");
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const { colors, showColor, hideColor, gradients, visibleColors } = useTheme();
@@ -144,18 +149,25 @@ export default function Home() {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold capitalize">{activeTab}</h2>
             <div className="flex items-center gap-1 md:gap-4">
-              <button
-                onClick={cycleTheme}
-                className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 md:p-2.5 rounded-lg"
-                aria-label="Toggle theme"
-              >
-                {theme === "light" && <SunIcon />}
-                {theme === "dark" && <MoonIcon />}
-                {theme === "system" && <CpuIcon />}
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={cycleTheme}
+                  className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 md:p-2.5 rounded-lg"
+                  aria-label="Toggle theme"
+                >
+                  {theme === "light" && <SunIcon />}
+                  {theme === "dark" && <MoonIcon />}
+                  {theme === "system" && <CpuIcon />}
+                </button>
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+                  {`Theme: ${theme.charAt(0).toUpperCase() + theme.slice(1)}`}
+                </div>
+              </div>
               <button
                 onClick={() => setIsSaveModalOpen(true)}
-                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
+                disabled={!session?.user}
+                title="Save Theme"
+                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
               >
                 <Save className="w-5 h-5" />
                 <span className="hidden md:inline">Save Theme</span>
@@ -199,8 +211,22 @@ export default function Home() {
           {/* Tab Content */}
           {activeTab === "colors" && (
             <div className="space-y-8">
-              <GenerateRandomThemeButton />
-
+              <div className="space-y-6 p-4 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-lg font-semibold">AI Theme Generation</h3>
+                    <div className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">
+                      Fast & Easy
+                    </div>
+                  </div>
+                  <p className="text-sm text-[var(--muted-foreground)]">
+                    Simply describe your desired theme using keywords, and AI will generate a matching color
+                    palette.
+                  </p>
+                  <GenerateAiPalette initialPrompt={prompt || ""} />
+                </div>
+                <GenerateRandomThemeButton />
+              </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 <ColorPicker colorKey="primary" label="Primary Color" />
 
@@ -270,5 +296,19 @@ export default function Home() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen items-center justify-center bg-[var(--background)]">
+          <div className="animate-pulse text-lg text-[var(--muted-foreground)]">Loading...</div>
+        </div>
+      }
+    >
+      <AppContent />
+    </Suspense>
   );
 }

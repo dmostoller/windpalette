@@ -42,6 +42,13 @@ const ErrorMessage = ({ message }: { message: string }) => (
   </div>
 );
 
+const SignInPrompt = () => (
+  <div className="flex flex-col items-center justify-center p-8 text-center space-y-4 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+    <h3 className="text-xl font-semibold">Please sign in to view saved themes</h3>
+    <p className="text-[var(--muted-foreground)]">Sign in to save and manage your custom color themes</p>
+  </div>
+);
+
 export function ThemesList() {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -136,6 +143,10 @@ export function ThemesList() {
       return false;
     }
   });
+
+  if (!session?.user) {
+    return <SignInPrompt />;
+  }
 
   return (
     <div className="space-y-4">

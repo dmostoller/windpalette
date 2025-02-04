@@ -1,11 +1,22 @@
 "use client";
 import { motion } from "framer-motion";
-import { Split, Palette, Wand2, Layout, Share } from "lucide-react";
+import { Split, Palette, Wand2, Layout, Share, Loader2, MoveRight } from "lucide-react";
 import Link from "next/link";
 import SnowParticles from "@/components/SnowParticles";
 import { SparklesIcon } from "./icons/sparkles";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LandingPage() {
+  const router = useRouter();
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerateClick = () => {
+    if (!prompt.trim()) return;
+    setLoading(true);
+    router.push(`/app?prompt=${encodeURIComponent(prompt.trim())}`);
+  };
   return (
     <div className="min-h-screen bg-[var(--background)] relative">
       <div className="absolute inset-0 z-10 pointer-events-none">
@@ -29,13 +40,13 @@ export default function LandingPage() {
 
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <motion.h1
-            className="text-6xl md:text-7xl font-bold mb-6"
+            className="text-6xl md:text-7xl font-bold mb-6 tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             Create Beautiful
-            <span className="text-[var(--primary)]"> Color Themes </span>
+            <span className="text-[var(--primary)] tracking-normal"> Color Themes </span>
             With Ease
           </motion.h1>
 
@@ -47,24 +58,50 @@ export default function LandingPage() {
           >
             Generate, customize, and export stunning color palettes for your next project
           </motion.p>
+          <div className="max-w-2xl mx-auto mb-10">
+            <div
+              className="flex gap-1.5 p-2 rounded-xl 
+              bg-[var(--card-background)]/80 
+              backdrop-blur-md 
+              border border-[var(--card-border)] 
+              shadow-lg
+              relative
+              overflow-hidden
+              before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none"
+            >
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="e.g. sunset in hawaii, cyberpunk city..."
+                className="flex-1 p-3 rounded-lg bg-transparent backdrop-blur-sm border border-[var(--card-border)] placeholder:text-[var(--foreground)] placeholder:opacity-50 relative z-10"
+              />
+              <button
+                onClick={handleGenerateClick}
+                disabled={loading || !prompt.trim()}
+                className="px-6 py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-dark)] transition-all duration-300 disabled:opacity-50 flex items-center gap-2 min-w-[160px] justify-center relative z-10"
+              >
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Wand2 className="w-4 h-4" />}
+                Generate Theme
+              </button>
+            </div>
+            <p className="text-sm text-[var(--muted-foreground)] mt-2">
+              Try describing a scene or mood for instant theme generation
+            </p>
+          </div>
 
           <motion.div
-            className="flex gap-4 justify-center"
+            className="flex justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <Link
-              href="/app"
-              className="px-8 py-3 bg-[var(--primary)] text-white rounded-lg bg-gradient-to-t from-[var(--primary-dark)] to-[var(--primary)] hover:bg-[var(--primary-dark)] hover:scale-105 transition-all duration-300"
-            >
-              Get Started
-            </Link>
-            <Link
               href="#features"
-              className="px-8 py-3 border border-[var(--card-border)] rounded-lg hover:border-[var(--primary)] transition-colors"
+              className="group text-sm text-muted-foreground hover:text-primary flex items-center gap-2 transition-all duration-300"
             >
               Learn More
+              <MoveRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </motion.div>
         </div>
@@ -72,8 +109,8 @@ export default function LandingPage() {
 
       {/* Features Section */}
       <section id="features" className="py-32">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-24">
+        <div className="max-w-screen-2xl mx-auto px-4">
+          <div className="text-center mb-12">
             <h2
               className="text-6xl font-bold mb-6 bg-gradient 
     bg-gradient-to-r from-[var(--primary)] to-[var(--primary-dark)] 
@@ -85,7 +122,7 @@ export default function LandingPage() {
               Everything you need to create the perfect color theme
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 icon: <Palette className="w-12 h-12" />,
@@ -136,7 +173,7 @@ export default function LandingPage() {
                   <div className="mb-6 transition-colors duration-300" style={{ color: feature.color }}>
                     {feature.icon}
                   </div>
-                  <h3 className="text-3xl font-semibold mb-4">{feature.title}</h3>
+                  <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                   <p className="text-xl text-[var(--foreground)] opacity-70">{feature.description}</p>
                 </div>
                 <div
@@ -146,6 +183,29 @@ export default function LandingPage() {
               </motion.div>
             ))}
           </div>
+          <motion.div
+            className="mt-12 flex items-center justify-center gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Link
+              href="/app"
+              className="group relative inline-flex items-center px-8 py-4 text-white font-semibold text-xl rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+              style={{
+                background: `linear-gradient(225deg, var(--primary) 0%, var(--accent) 100%)`,
+                boxShadow: `0 4px 0 0 rgba(0,0,0,0.2), 0 8px 16px -8px rgba(0,0,0,0.3)`,
+              }}
+            >
+              Try It Now
+              <div
+                className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                style={{
+                  background: "linear-gradient(45deg, transparent, rgba(255,255,255,0.5), transparent)",
+                }}
+              />
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -167,7 +227,7 @@ export default function LandingPage() {
         />
 
         <div className="max-w-screen-2xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-24">
+          <div className="text-center mb-12">
             <h2 className="text-6xl font-bold mb-6 bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)] bg-clip-text text-transparent">
               How It Works
             </h2>
@@ -251,6 +311,35 @@ export default function LandingPage() {
               </motion.div>
             ))}
           </div>
+          <motion.div
+            className="mt-12 flex items-center justify-center gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Link
+              href="/app"
+              className="group relative inline-flex items-center px-8 py-4 text-white font-semibold text-xl rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+              style={{
+                background: `linear-gradient(225deg, var(--primary) 0%, var(--accent) 100%)`,
+                boxShadow: `0 4px 0 0 rgba(0,0,0,0.2), 0 8px 16px -8px rgba(0,0,0,0.3)`,
+              }}
+            >
+              Get Started
+              <div
+                className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                style={{
+                  background: "linear-gradient(45deg, transparent, rgba(255,255,255,0.5), transparent)",
+                }}
+              />
+            </Link>
+            <Link
+              href="/docs"
+              className="group px-8 py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl hover:bg-[var(--primary)] hover:text-white transition-all duration-300 font-semibold text-xl"
+            >
+              View Documentation
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -347,21 +436,13 @@ export default function LandingPage() {
                     }}
                   >
                     <SparklesIcon />
-                    <span>Start Generating</span>
+                    <span className="ml-2"> Start Generating</span>
                     <div
                       className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                       style={{
                         background: "linear-gradient(45deg, transparent, rgba(255,255,255,0.5), transparent)",
                       }}
                     />
-                  </Link>
-
-                  {/* Secondary Button */}
-                  <Link
-                    href="#features"
-                    className="group px-8 py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl hover:bg-[var(--primary)] hover:text-white transition-all duration-300 font-semibold text-xl"
-                  >
-                    Explore Features
                   </Link>
                 </div>
 
