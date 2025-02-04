@@ -98,7 +98,7 @@ export default function LandingPage() {
           >
             <Link
               href="#features"
-              className="group text-sm text-muted-foreground/70 hover:text-white flex items-center gap-2 transition-all duration-300"
+              className="group text-sm text-muted-foreground hover:text-primary flex items-center gap-2 transition-all duration-300"
             >
               Learn More
               <MoveRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
