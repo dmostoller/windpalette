@@ -40,7 +40,7 @@ export default function LandingPage() {
 
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <motion.h1
-            className="text-6xl md:text-7xl font-bold mb-6 tracking-tight"
+            className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -60,7 +60,8 @@ export default function LandingPage() {
           </motion.p>
           <div className="max-w-2xl mx-auto mb-10">
             <div
-              className="flex gap-1.5 p-2 rounded-xl 
+              className="flex flex-col sm:flex-row
+              gap-1.5 p-2 rounded-xl 
               bg-[var(--card-background)]/80 
               backdrop-blur-md 
               border border-[var(--card-border)] 
@@ -191,7 +192,7 @@ export default function LandingPage() {
           >
             <Link
               href="/app"
-              className="group relative inline-flex items-center px-8 py-4 text-white font-semibold text-xl rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full sm:w-auto group relative inline-flex items-center justify-center px-8 py-4 text-white font-semibold text-xl rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
               style={{
                 background: `linear-gradient(225deg, var(--primary) 0%, var(--accent) 100%)`,
                 boxShadow: `0 4px 0 0 rgba(0,0,0,0.2), 0 8px 16px -8px rgba(0,0,0,0.3)`,
@@ -312,14 +313,14 @@ export default function LandingPage() {
             ))}
           </div>
           <motion.div
-            className="mt-12 flex items-center justify-center gap-4"
+            className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             <Link
               href="/app"
-              className="group relative inline-flex items-center px-8 py-4 text-white font-semibold text-xl rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full sm:w-auto group relative inline-flex items-center justify-center px-8 py-4 text-white font-semibold text-xl rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
               style={{
                 background: `linear-gradient(225deg, var(--primary) 0%, var(--accent) 100%)`,
                 boxShadow: `0 4px 0 0 rgba(0,0,0,0.2), 0 8px 16px -8px rgba(0,0,0,0.3)`,
@@ -335,7 +336,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/docs"
-              className="group px-8 py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl hover:bg-[var(--primary)] hover:text-white transition-all duration-300 font-semibold text-xl"
+              className="w-full sm:w-auto text-center group px-8 py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl hover:bg-[var(--primary)] hover:text-white transition-all duration-300 font-semibold text-xl"
             >
               View Documentation
             </Link>

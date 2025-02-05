@@ -68,7 +68,7 @@ export default function GenerateAiPalette({ initialPrompt = "" }: GenerateAiPale
         <VisuallyHidden>
           <label htmlFor="aiPrompt">AI Theme Generation</label>
         </VisuallyHidden>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-col lg:flex-row">
           <input
             id="aiPrompt"
             type="text"
