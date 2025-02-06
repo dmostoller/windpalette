@@ -41,6 +41,7 @@ function AppContent() {
   const { colors, showColor, hideColor, gradients, visibleColors } = useTheme();
   const [activeTab, setActiveTab] = useState<DefaultTab>(settings.defaultTab);
   const isSidebarCollapsed = settings.sidebarState === "collapsed";
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   type ThemeMode = "light" | "dark" | "system";
   const [theme, setTheme] = useState<ThemeMode>("system");
@@ -120,23 +121,27 @@ function AppContent() {
 
       {/* Mobile Drawer - visible only on mobile */}
       <div className="md:hidden">
-        <Drawer.Root direction="left">
-          <Drawer.Trigger className="fixed bottom-4 left-4 p-3 rounded-full border border-[var(--card-border)] bg-[var(--card-background)] shadow-lg hover:bg-[var(--card-background-hover)] transition-all z-20">
+        <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+          <Drawer.Trigger className="fixed bottom-4 left-4 p-3 rounded-full border border-[var(--card-border)] bg-[var(--primary)] text-white shadow-lg hover:bg-[var(--primary-dark)] transition-all z-20">
             <Menu className="w-8 h-8" />
           </Drawer.Trigger>
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-            <Drawer.Content className="fixed left-0 top-0 h-full w-[280px] bg-[var(--card-background)] p-4 z-50">
-              <Drawer.Title asChild>
-                <VisuallyHidden>Navigation Menu</VisuallyHidden>
-              </Drawer.Title>
-              <SidebarContent
-                isSidebarCollapsed={false}
-                handleTabChange={handleTabChange}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                isLoggedIn={!!session?.user}
-              />
+            <Drawer.Content className="bg-[var(--card-background)] flex flex-col rounded-t-[10px] h-[96vh] mt-24 fixed bottom-0 left-0 right-0 z-50">
+              <div className="p-4 bg-[var(--card-background)] rounded-t-[10px] flex-1">
+                <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-[var(--card-border)] mb-8" />
+                <Drawer.Title asChild>
+                  <VisuallyHidden>Navigation Menu</VisuallyHidden>
+                </Drawer.Title>
+                <SidebarContent
+                  isSidebarCollapsed={false}
+                  handleTabChange={handleTabChange}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                  isLoggedIn={!!session?.user}
+                  setIsDrawerOpen={setIsDrawerOpen}
+                />
+              </div>
             </Drawer.Content>
           </Drawer.Portal>
         </Drawer.Root>

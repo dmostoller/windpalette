@@ -29,6 +29,7 @@ interface SidebarContentProps {
   toggleSidebar?: () => void;
   showToggle?: boolean;
   isLoggedIn?: boolean;
+  setIsDrawerOpen?: (open: boolean) => void;
 }
 
 const navigationItems: NavigationItem[] = [
@@ -50,12 +51,13 @@ export function SidebarContent({
   toggleSidebar,
   showToggle = true,
   isLoggedIn = false,
+  setIsDrawerOpen,
 }: SidebarContentProps) {
   const visibleNavigationItems = navigationItems.filter(
     (item) => !item.hidden && (item.id !== "user" || isLoggedIn),
   );
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-[calc(100vh-8rem)] md:h-full flex flex-col">
       <div className="flex items-center justify-between mb-8 relative">
         <motion.div
           className="flex flex-col"
@@ -128,7 +130,10 @@ export function SidebarContent({
             <motion.button
               layout
               key={item.id}
-              onClick={() => handleTabChange(item.id)}
+              onClick={() => {
+                handleTabChange(item.id);
+                setIsDrawerOpen?.(false);
+              }}
               className={`w-full flex items-center rounded-lg
                 ${isSidebarCollapsed ? "justify-center px-3 py-2" : "justify-start px-4 py-3"}
                 ${activeTab === item.id ? "bg-[var(--primary)] text-white" : "hover:bg-[var(--primary-hover)] hover:bg-opacity-10"}`}
