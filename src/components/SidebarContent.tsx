@@ -58,7 +58,7 @@ export function SidebarContent({
   );
   return (
     <div className="h-[calc(100vh-8rem)] md:h-full flex flex-col">
-      <div className="flex items-center justify-between mb-8 relative">
+      <div className="flex items-center justify-between mb-2 md:mb-8 relative">
         <motion.div
           className="flex flex-col"
           animate={{
@@ -123,7 +123,7 @@ export function SidebarContent({
         )}
       </div>
 
-      <div className="space-y-4 flex-1">
+      <div className="space-y-0 md:space-y-4 flex-1">
         {visibleNavigationItems
           .filter((item) => !item.hidden)
           .map((item) => (
