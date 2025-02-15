@@ -7,6 +7,7 @@ import { SEARCHABLE_CONTENT } from "@/lib/docs";
 import { Metadata } from "next";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Documentation",
@@ -48,6 +49,27 @@ const DOCUMENTATION_SECTIONS = [
       { id: "cards", title: "Cards" },
       { id: "buttons", title: "Buttons" },
       { id: "usage", title: "Usage" },
+    ],
+  },
+  {
+    id: "shadcn",
+    icon: (
+      <div className="relative w-5 h-5">
+        <Image
+          src="https://github.com/shadcn.png"
+          alt="shadcn/ui"
+          width={20}
+          height={20}
+          className="rounded-full"
+        />
+      </div>
+    ),
+    title: "shadcn/ui",
+    subsections: [
+      { id: "integration", title: "Integration" },
+      { id: "preview", title: "Live Preview" },
+      { id: "export", title: "Theme Export" },
+      { id: "components", title: "Components" },
     ],
   },
   {
