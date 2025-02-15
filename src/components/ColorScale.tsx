@@ -5,6 +5,7 @@ import { ScaleKeys } from "@/types/color";
 import { ThemeColors } from "@/types/theme";
 import ColorSwatch from "./ColorSwatch";
 import CopyStylesButton from "./CopyStylesButton";
+import CopyShadcnThemeButton from "./CopyShadcnThemeButton";
 
 const SCALE_VALUES: ScaleKeys[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -22,7 +23,10 @@ export default function ColorScale({ visibleColors = 3 }: ColorScaleProps) {
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <h3 className="text-sm font-medium">Color Scales</h3>
-        <CopyStylesButton visibleColorKeys={visibleColorKeys} />
+        <div className="flex items-center gap-2">
+          <CopyShadcnThemeButton />
+          <CopyStylesButton visibleColorKeys={visibleColorKeys} />
+        </div>
       </div>
       {visibleColorKeys.map((colorKey) => (
         <div key={colorKey} className="space-y-2">
