@@ -5,12 +5,18 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.windpalette.com"),
   title: {
-    default: "WindPalette | Tailwind CSS Theme Generator - Free Open Source Design Tool",
+    default: "WindPalette - Tailwind & shadcn/ui Theme Generator",
     template: "%s | Theme Generator",
   },
   description:
-    "Create beautiful, consistent color themes for your applications using AI or manual tools. Free, open-source design tool with AI theme generation, automatic color scale generation, gradient creation, and multiple export options.",
+    "Create beautiful color themes for Tailwind CSS and shadcn/ui. Live preview, instant export, and perfect color harmony.",
   keywords: [
+    "tailwind",
+    "shadcn",
+    "shadcn/ui",
+    "color palette",
+    "react components",
+    "ui library",
     "theme generator",
     "color palette",
     "design tool",
@@ -45,9 +51,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.windpalette.com",
     siteName: "WindPalette",
-    title: "WindPalette | Tailwind CSS Theme Generator - Free Open Source Design Tool",
+    title: "WindPalette - Tailwind & shadcn/ui Theme Generator",
     description:
-      "Create beautiful, consistent color themes for your applications using AI or manual tools. Free, open-source design tool with AI theme generation and automatic color scale generation.",
+      "Create beautiful color themes for Tailwind CSS and shadcn/ui. The easiest way to generate and preview shadcn/ui themes.",
     images: [
       {
         url: "/og-image.png",
@@ -59,7 +65,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "WindPalette | Tailwind CSS Theme Generator - Free Open Source Design Tool",
+    title: "WindPalette - Tailwind & shadcn/ui Theme Generator",
     description: "Create beautiful, consistent color themes for your applications using AI or manual tools",
     images: ["/og-image.png"],
     creator: "@windpalette",

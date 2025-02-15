@@ -354,6 +354,139 @@ module.exports = {
         </section>
       </div>
     ),
+    shadcn: (
+      <div className="space-y-8">
+        <section id="shadcn-integration">
+          <h2 className="text-3xl font-bold mb-4">shadcn/ui Integration</h2>
+          <p className="text-[var(--text-secondary)] mb-6">
+            WindPalette offers seamless integration with shadcn/ui, providing instant theme preview and export
+            capabilities.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">Key Features</h3>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Live preview of your theme on real shadcn/ui components</li>
+                <li>One-click theme export in the correct format</li>
+                <li>Perfect color scale generation</li>
+                <li>Automatic dark mode support</li>
+              </ul>
+            </div>
+
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">Why shadcn/ui?</h3>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Most popular React component library for Tailwind CSS</li>
+                <li>Beautiful, accessible components</li>
+                <li>Customizable and themeable</li>
+                <li>Copy and paste components</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="shadcn-preview">
+          <h2 className="text-2xl font-bold mb-4">Live Preview</h2>
+          <p className="text-[var(--text-secondary)] mb-6">
+            Preview your theme on real shadcn/ui components before implementing:
+          </p>
+          <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+            <h3 className="text-xl font-medium mb-3">Preview Features</h3>
+            <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+              <li>Interactive component playground</li>
+              <li>Dark mode toggle</li>
+              <li>Common component variants</li>
+              <li>Real-time color updates</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="shadcn-export">
+          <h2 className="text-2xl font-bold mb-4">Theme Export</h2>
+          <div className="space-y-4">
+            <p className="text-[var(--text-secondary)]">
+              Export your theme in the correct format for shadcn/ui:
+            </p>
+            <div className="bg-[var(--card-background)] p-4 rounded-lg border border-[var(--card-border)]">
+              <pre className="text-sm overflow-x-auto">
+                <code>{`// globals.css
+    @layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+    --chart-1: 0 0% 20%;
+    --chart-2: 0 0% 35%;
+    --chart-3: 0 0% 50%;
+    --chart-4: 0 0% 65%;
+    --chart-5: 0 0% 80%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 0 0% 85%;
+    --chart-2: 0 0% 70%;
+    --chart-3: 0 0% 55%;
+    --chart-4: 0 0% 40%;
+    --chart-5: 0 0% 25%;
+  }
+}`}</code>
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        <section id="shadcn-components">
+          <h2 className="text-2xl font-bold mb-4">Supported Components</h2>
+          <div className="space-y-4">
+            <p className="text-[var(--text-secondary)]">Preview and test your theme with these components:</p>
+            <ul className="list-disc pl-6 space-y-2 text-[var(--text-secondary)]">
+              <li>Button variants</li>
+              <li>Input fields and form elements</li>
+              <li>Cards and containers</li>
+              <li>Charts</li>
+              <li>And more...</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    ),
     gradients: (
       <div className="space-y-8">
         <section id="gradients-gradient-types">
@@ -586,7 +719,6 @@ module.exports = {
         </section>
       </div>
     ),
-    // Add more sections here...
   };
 
   return (

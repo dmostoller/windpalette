@@ -1,4 +1,4 @@
-import { Paintbrush, Gift, Code, Heart, Users } from "lucide-react";
+import { Paintbrush, Gift, Code, Heart, Users, Palette } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -75,7 +75,41 @@ export default function About() {
               </ul>
             </div>
           </section>
-
+          <section className="p-6 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative">
+                <Image
+                  src="https://github.com/shadcn.png"
+                  alt="shadcn/ui"
+                  width={24}
+                  height={24}
+                  className="rounded-full"
+                />
+                <div className="absolute -right-1 -bottom-1 bg-[var(--card-background)] rounded-full p-0.5">
+                  <Palette className="w-3 h-3 text-[var(--primary)]" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-semibold">shadcn/ui Integration</h2>
+            </div>
+            <div className="space-y-4 text-[var(--text-secondary)]">
+              <p>
+                We&apos;re proud to offer seamless integration with shadcn/ui, one of the most popular React
+                component libraries built on Tailwind CSS. Our integration provides:
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Live preview of your theme on real shadcn/ui components</li>
+                <li>One-click theme export in the correct format</li>
+                <li>Perfect color scale generation for shadcn/ui&apos;s design system</li>
+                <li>Automatic dark mode support</li>
+              </ul>
+              <div className="mt-6 p-4 bg-[var(--card)] border border-[var(--card-border)] rounded-lg">
+                <p className="text-sm italic">
+                  &quot;WindPalette makes it incredibly easy to create and preview themes for shadcn/ui. No
+                  more manual color adjustments or guessing how your theme will look.&quot;
+                </p>
+              </div>
+            </div>
+          </section>
           <section className="p-6 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg">
             <div className="flex items-center gap-3 mb-4">
               <Users className="w-6 h-6 text-[var(--success)]" />

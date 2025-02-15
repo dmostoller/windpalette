@@ -30,6 +30,8 @@ import { Drawer } from "vaul";
 import { SidebarContent } from "@/components/SidebarContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import GenerateAiPalette from "@/components/GenerateAiPalette";
+import { ShadcnDemoButton } from "@/components/buttons/ShadcnDemoButton";
+import { Tooltip } from "@/components/Tooltip";
 
 function AppContent() {
   const { data: session } = useSession();
@@ -155,61 +157,90 @@ function AppContent() {
             <h2 className="text-2xl font-bold capitalize">{activeTab}</h2>
             <div className="flex items-center gap-1 md:gap-4">
               <div className="relative group">
-                <button
-                  onClick={cycleTheme}
-                  className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 md:p-2.5 rounded-lg"
-                  aria-label="Toggle theme"
-                >
-                  {theme === "light" && <SunIcon />}
-                  {theme === "dark" && <MoonIcon />}
-                  {theme === "system" && <CpuIcon />}
-                </button>
-                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-                  {`Theme: ${theme.charAt(0).toUpperCase() + theme.slice(1)}`}
-                </div>
+                <Tooltip content={`Theme: ${theme.charAt(0).toUpperCase() + theme.slice(1)}`}>
+                  <button
+                    onClick={cycleTheme}
+                    className="border border-[var(--card-border)] hover:bg-[var(--card-background)] p-2 md:p-2.5 rounded-lg"
+                    aria-label="Toggle theme"
+                  >
+                    {theme === "light" && <SunIcon />}
+                    {theme === "dark" && <MoonIcon />}
+                    {theme === "system" && <CpuIcon />}
+                  </button>
+                </Tooltip>
               </div>
-              <button
-                onClick={() => setIsSaveModalOpen(true)}
-                disabled={!session?.user}
-                title="Save Theme"
-                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-              >
-                <Save className="w-5 h-5" />
-                <span className="hidden md:inline">Save Theme</span>
-              </button>
-              <DemoButton
-                colors={{
-                  primary: (typeof colors.primary === "string"
-                    ? colors.primary
-                    : "value" in colors.primary
-                      ? colors.primary.value
-                      : "") as string,
-                  ...(colors.secondary && {
-                    secondary: (typeof colors.secondary === "string"
-                      ? colors.secondary
-                      : "value" in colors.secondary
-                        ? colors.secondary.value
+              <Tooltip content={session?.user ? "Save Theme" : "Sign in to save themes"}>
+                <button
+                  onClick={() => setIsSaveModalOpen(true)}
+                  disabled={!session?.user}
+                  className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                >
+                  <Save className="w-5 h-5" />
+                  <span className="hidden md:inline">Save</span>
+                </button>
+              </Tooltip>
+              <Tooltip content="Preview your theme">
+                <DemoButton
+                  colors={{
+                    primary: (typeof colors.primary === "string"
+                      ? colors.primary
+                      : "value" in colors.primary
+                        ? colors.primary.value
                         : "") as string,
-                  }),
-                  ...(colors.accent && {
-                    accent: (typeof colors.accent === "string"
-                      ? colors.accent
-                      : "value" in colors.accent
-                        ? colors.accent.value
+                    ...(colors.secondary && {
+                      secondary: (typeof colors.secondary === "string"
+                        ? colors.secondary
+                        : "value" in colors.secondary
+                          ? colors.secondary.value
+                          : "") as string,
+                    }),
+                    ...(colors.accent && {
+                      accent: (typeof colors.accent === "string"
+                        ? colors.accent
+                        : "value" in colors.accent
+                          ? colors.accent.value
+                          : "") as string,
+                    }),
+                  }}
+                  gradients={gradients}
+                  visibleColors={visibleColors}
+                />
+              </Tooltip>
+              <Tooltip content="Preview your theme on real shadcn/ui components">
+                <ShadcnDemoButton
+                  colors={{
+                    primary: (typeof colors.primary === "string"
+                      ? colors.primary
+                      : "value" in colors.primary
+                        ? colors.primary.value
                         : "") as string,
-                  }),
-                }}
-                gradients={gradients}
-                visibleColors={visibleColors}
-              />
-              <button
-                type="button"
-                onClick={() => setIsShareModalOpen(true)}
-                className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
-              >
-                <Share className="w-5 h-5" />
-                <span className="hidden md:inline">Share</span>
-              </button>
+                    ...(colors.secondary && {
+                      secondary: (typeof colors.secondary === "string"
+                        ? colors.secondary
+                        : "value" in colors.secondary
+                          ? colors.secondary.value
+                          : "") as string,
+                    }),
+                    ...(colors.accent && {
+                      accent: (typeof colors.accent === "string"
+                        ? colors.accent
+                        : "value" in colors.accent
+                          ? colors.accent.value
+                          : "") as string,
+                    }),
+                  }}
+                />
+              </Tooltip>
+              <Tooltip content="Share Theme">
+                <button
+                  type="button"
+                  onClick={() => setIsShareModalOpen(true)}
+                  className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
+                >
+                  <Share className="w-5 h-5" />
+                  <span className="hidden md:inline">Share</span>
+                </button>
+              </Tooltip>
             </div>
           </div>
 

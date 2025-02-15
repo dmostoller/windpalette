@@ -32,7 +32,7 @@ export const DemoButton = ({ colors, gradients, visibleColors }: DemoButtonProps
       className="flex items-center gap-2 p-2 border border-[var(--card-border)] hover:bg-[var(--card-background)] rounded-lg"
     >
       <SquareArrowOutUpRight className="w-5 h-5" />
-      <span className="hidden md:inline">Demo</span>
+      <span className="hidden md:inline">Preview</span>
     </button>
   );
 };

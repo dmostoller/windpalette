@@ -103,7 +103,6 @@ export default function CopyShadcnThemeButton() {
         <Copy size={16} />
         Copy shadcn Theme
       </button>
-
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <div className="space-y-4">
           <h3 className="text-lg font-medium">Copy shadcn Theme</h3>

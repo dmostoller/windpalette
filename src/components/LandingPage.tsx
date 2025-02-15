@@ -6,11 +6,18 @@ import SnowParticles from "@/components/SnowParticles";
 import { SparklesIcon } from "./icons/sparkles";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function LandingPage() {
   const router = useRouter();
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const NewBadge = () => (
+    <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-[var(--primary)] text-white rounded-full">
+      NEW
+    </span>
+  );
 
   const handleGenerateClick = () => {
     if (!prompt.trim()) return;
@@ -56,7 +63,11 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Generate, customize, and export stunning color palettes for your next project
+            Generate, customize, and export stunning color palettes for Tailwind CSS and{" "}
+            <span className="inline-flex items-center gap-2 text-primary">
+              shadcn/ui
+              <NewBadge />
+            </span>
           </motion.p>
           <div className="max-w-2xl mx-auto mb-10">
             <div
@@ -125,13 +136,13 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              {
-                icon: <Palette className="w-12 h-12" />,
-                title: "Color Picker",
-                description: "Intuitive color selection with advanced controls",
-                gradient: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
-                color: "var(--primary)",
-              },
+              // {
+              //   icon: <Palette className="w-12 h-12" />,
+              //   title: "Color Picker",
+              //   description: "Intuitive color selection with advanced controls",
+              //   gradient: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
+              //   color: "var(--primary)",
+              // },
               {
                 icon: <Wand2 className="w-12 h-12" />,
                 title: "Auto Generate",
@@ -145,6 +156,23 @@ export default function LandingPage() {
                 description: "See your colors in real-world components",
                 gradient: "linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%)",
                 color: "var(--accent)",
+              },
+              {
+                icon: (
+                  <div className="relative">
+                    <Image
+                      src="https://github.com/shadcn.png"
+                      alt="shadcn/ui"
+                      width={48}
+                      height={48}
+                      className="rounded-full"
+                    />
+                  </div>
+                ),
+                title: "shadcn/ui Themes",
+                description: "Instantly preview and export themes for the most popular React UI library",
+                gradient: "linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)",
+                color: "var(--primary)",
               },
               {
                 icon: <Share className="w-12 h-12" />,
@@ -250,7 +278,7 @@ export default function LandingPage() {
               },
               {
                 step: "2",
-                title: "Customize & Preview",
+                title: "Customize",
                 description:
                   "Fine-tune your colors or try different AI-generated themes until you find the perfect combination.",
                 icon: <Wand2 className="w-12 h-12" />,
@@ -259,10 +287,21 @@ export default function LandingPage() {
               },
               {
                 step: "3",
-                title: "Export & Use",
+                title: "Export & Preview",
                 description:
-                  "Get your theme in Tailwind config format or CSS variables, ready to use in your project.",
-                icon: <Share className="w-12 h-12" />,
+                  "Export to Tailwind config, CSS variables, or preview directly in shadcn/ui components.",
+                icon: (
+                  <div className="flex items-center gap-2">
+                    <Share className="w-20 h-20" />
+                    <Image
+                      src="https://github.com/shadcn.png"
+                      alt="shadcn/ui"
+                      width={38}
+                      height={38}
+                      className="rounded-full"
+                    />
+                  </div>
+                ),
                 color: "var(--accent)",
                 gradient: "from-[var(--accent)] to-[var(--primary)]",
               },
