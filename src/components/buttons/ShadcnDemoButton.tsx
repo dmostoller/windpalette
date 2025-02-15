@@ -1,21 +1,26 @@
 import { Palette } from "lucide-react";
 import { ThemeData } from "@/utils/share";
 import Image from "next/image";
+import { useTheme } from "@/context/ThemeContext";
 
 interface ShadcnDemoButtonProps {
   colors: ThemeData["colors"];
 }
 
 export const ShadcnDemoButton = ({ colors }: ShadcnDemoButtonProps) => {
+  const { visibleColors } = useTheme();
   const params = new URLSearchParams();
 
   if (colors.primary) {
     params.set("primary", colors.primary);
   }
-  if (colors.secondary) {
+  // Only add secondary if visibleColors >= 2
+  if (colors.secondary && visibleColors >= 2) {
     params.set("secondary", colors.secondary);
   }
-  if (colors.accent) {
+
+  // Only add accent if visibleColors >= 3
+  if (colors.accent && visibleColors >= 3) {
     params.set("accent", colors.accent);
   }
 
