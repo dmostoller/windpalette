@@ -115,9 +115,9 @@ const PreviewComponents = () => {
       {/* Controls Bar */}
       <div className="flex justify-between items-center mb-8">
         <div className="flex justify-center items-center gap-4">
-          <h3 className="text-lg font-medium">Gradient Variants</h3>
+          <h3 className="text-lg font-medium">Gradients</h3>
           <select
-            className="w-48 p-2 rounded-lg border bg-[var(--card2-background)] border-[var(--card-border)] mr-2"
+            className="w-32 p-2 rounded-lg border bg-[var(--card2-background)] border-[var(--card-border)] mr-2"
             value={selectedVariant.name}
             onChange={(e) => {
               const variant = GRADIENT_VARIANTS.find((v) => v.name === e.target.value);
