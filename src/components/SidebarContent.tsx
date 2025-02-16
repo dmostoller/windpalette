@@ -38,7 +38,7 @@ const navigationItems: NavigationItem[] = [
   { id: "components", icon: <LayoutPanelTopIcon /> },
   { id: "gradients", icon: <LayersIcon /> },
   { id: "buttons", icon: <SquareStackIcon /> },
-  { id: "saved themes", icon: <ArchiveIcon /> },
+  { id: "archive", icon: <ArchiveIcon /> },
   { id: "help", icon: <CircleHelpIcon /> },
   { id: "user", icon: <UserIcon /> },
 ];
