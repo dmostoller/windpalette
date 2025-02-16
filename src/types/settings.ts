@@ -8,7 +8,7 @@ export type DefaultTab =
   | "components"
   | "gradients"
   | "buttons"
-  | "saved themes"
+  | "archive"
   | "help"
   | "user"
   | "settings";

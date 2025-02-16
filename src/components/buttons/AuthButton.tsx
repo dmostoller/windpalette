@@ -12,7 +12,7 @@ interface AuthButtonProps {
       | "components"
       | "gradients"
       | "buttons"
-      | "saved themes"
+      | "archive"
       | "help"
       | "user"
       | "settings",

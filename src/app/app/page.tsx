@@ -154,7 +154,7 @@ function AppContent() {
         <div className="max-w-screen-2xl mx-auto">
           {/* Top Bar */}
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-bold capitalize">{activeTab}</h2>
+            <h2 className="text-lg md:text-2xl font-bold capitalize">{activeTab}</h2>
             <div className="flex items-center gap-1 md:gap-4">
               <div className="relative group">
                 <Tooltip content={`Theme: ${theme.charAt(0).toUpperCase() + theme.slice(1)}`}>
@@ -311,7 +311,7 @@ function AppContent() {
 
           {activeTab === "browse" && <BrowseColors />}
 
-          {activeTab === "saved themes" && <ThemesList />}
+          {activeTab === "archive" && <ThemesList />}
 
           {activeTab === "help" && <HelpSection />}
 
