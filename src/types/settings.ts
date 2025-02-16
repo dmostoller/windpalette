@@ -11,7 +11,8 @@ export type DefaultTab =
   | "archive"
   | "help"
   | "user"
-  | "settings";
+  | "settings"
+  | "community";
 
 export interface Settings {
   themeMode: ThemeMode;

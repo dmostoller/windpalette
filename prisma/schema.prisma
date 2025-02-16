@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  themes        Theme[]   // Themes created by user
+  savedThemes   ThemeSave[] // Themes saved by user
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Theme {
+  id            String    @id @default(cuid())
+  name          String
+  colors        ThemeColor[]
+  gradients     Gradient[]
+  visibleColors Int      @default(1)
+  published     Boolean   @default(false)
+  authorId      String
+  author        User      @relation(fields: [authorId], references: [id])
+  saves         ThemeSave[]
+  saveCount     Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ThemeColor {
+  id        String   @id @default(cuid())
+  themeId   String
+  theme     Theme    @relation(fields: [themeId], references: [id])
+  name      String   // e.g., "primary", "secondary", "accent"
+  value     String   // e.g., "#FF4081"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Gradient {
+  id        String   @id @default(cuid())
+  themeId   String
+  theme     Theme    @relation(fields: [themeId], references: [id])
+  color     String   // e.g., "#FF4081"
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ThemeSave {
+  id        String   @id @default(cuid())
+  themeId   String
+  userId    String
+  theme     Theme    @relation(fields: [themeId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([themeId, userId])
+}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ChevronLeft, Palette } from "lucide-react";
 import {
   UserIcon,
+  UsersIcon,
   LayersIcon,
   SearchIcon,
   CircleHelpIcon,
@@ -39,6 +40,7 @@ const navigationItems: NavigationItem[] = [
   { id: "gradients", icon: <LayersIcon /> },
   { id: "buttons", icon: <SquareStackIcon /> },
   { id: "archive", icon: <ArchiveIcon /> },
+  { id: "community", icon: <UsersIcon /> },
   { id: "help", icon: <CircleHelpIcon /> },
   { id: "user", icon: <UserIcon /> },
 ];

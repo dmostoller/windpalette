@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { ThemeColors } from "@/types/theme";
-import { Trash2, Search, X, CircleAlert } from "lucide-react";
+import { Share2, Trash2, Search, X, CircleAlert, Loader2 } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -56,6 +56,7 @@ export function ThemesList() {
   const { data: session } = useSession();
   const { setThemeColors, setThemeGradients } = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
+  const [publishing, setPublishing] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -131,6 +132,45 @@ export function ThemesList() {
     }
   };
 
+  const handlePublish = async (e: React.MouseEvent, theme: Theme) => {
+    e.stopPropagation();
+
+    if (!session?.user) return;
+
+    setPublishing(theme.id);
+    try {
+      const publishData = {
+        name: theme.name,
+        colors: theme.colors,
+        gradients: theme.gradients,
+        visibleColors: Object.keys(theme.colors).length,
+        authorId: session.user.id,
+      };
+      console.log("Publishing theme:", publishData);
+      const response = await fetch("/api/themes/community", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(publishData),
+      });
+      console.log("Response:", response);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to publish theme");
+      }
+
+      // Show success message
+      console.log("Theme published successfully!");
+    } catch (error) {
+      console.error("Failed to publish theme:", error);
+      // Show error message to user
+    } finally {
+      setPublishing(null);
+    }
+  };
+
   const filteredThemes = themes.filter((theme) => {
     if (!searchQuery) return true;
 
@@ -187,12 +227,27 @@ export function ThemesList() {
               className="p-4 bg-[var(--card-background)] border rounded-lg border-[var(--card-border)] hover:border-[var(--primary)] cursor-pointer relative group" // Added relative and group
               onClick={() => handleThemeSelect(theme)}
             >
-              <button
-                onClick={(e) => handleDelete(e, theme.id)}
-                className="absolute text-gray-500 top-2 right-2 p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-500"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={(e) => handlePublish(e, theme)}
+                  disabled={publishing === theme.id}
+                  className="p-2 text-gray-500 hover:text-[var(--primary)] disabled:opacity-50"
+                  title="Publish to Community"
+                >
+                  {publishing === theme.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Share2 className="w-4 h-4" />
+                  )}
+                </button>
+                <button
+                  onClick={(e) => handleDelete(e, theme.id)}
+                  className="p-2 text-gray-500 hover:text-red-500"
+                  title="Delete Theme"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
               <h3 className="font-bold">{theme.name}</h3>
               <div className="flex gap-2 mt-2">
                 {Object.entries(theme.colors).map(([key, value]) => (

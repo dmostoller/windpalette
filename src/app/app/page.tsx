@@ -32,6 +32,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import GenerateAiPalette from "@/components/GenerateAiPalette";
 import { ShadcnDemoButton } from "@/components/buttons/ShadcnDemoButton";
 import { Tooltip } from "@/components/Tooltip";
+import CommunityPage from "@/components/CommunityPage";
 
 function AppContent() {
   const { data: session } = useSession();
@@ -312,6 +313,12 @@ function AppContent() {
           {activeTab === "browse" && <BrowseColors />}
 
           {activeTab === "archive" && <ThemesList />}
+
+          {activeTab === "community" && (
+            <div className="space-y-8">
+              <CommunityPage />
+            </div>
+          )}
 
           {activeTab === "help" && <HelpSection />}
 

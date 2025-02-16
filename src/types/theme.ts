@@ -24,9 +24,20 @@ export interface Theme {
   [key: string]:
     | string
     | number
+    | boolean
     | Record<string, string>
     | { colors: Array<{ color: string; active: boolean }> };
 }
+
+export interface CommunityTheme extends Theme {
+  saveCount: number;
+  published: boolean;
+  author: {
+    name: string;
+  };
+  visibleColors: number;
+}
+
 export interface StatusColors {
   info: { base: string; light: string; dark: string };
   success: { base: string; light: string; dark: string };

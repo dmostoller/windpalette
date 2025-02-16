@@ -10,3 +10,4 @@ export { LayoutPanelTopIcon } from "./layout";
 export { SparklesIcon } from "./sparkles";
 export { CpuIcon } from "./cpu";
 export { SquareStackIcon } from "./square-stack";
+export { UsersIcon } from "./users";
