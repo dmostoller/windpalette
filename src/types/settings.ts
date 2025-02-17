@@ -3,7 +3,7 @@ export type ColorFormat = "HEX" | "RGB" | "HSL";
 export type ExportFormat = "Tailwind Variables" | "CSS Variables" | "Tailwind Config" | "SCSS Variables";
 export type ColorScale = "1" | "3" | "5" | "7" | "9";
 export type DefaultTab =
-  | "browse"
+  | "create"
   | "colors"
   | "components"
   | "gradients"
@@ -11,7 +11,8 @@ export type DefaultTab =
   | "archive"
   | "help"
   | "user"
-  | "settings";
+  | "settings"
+  | "community";
 
 export interface Settings {
   themeMode: ThemeMode;

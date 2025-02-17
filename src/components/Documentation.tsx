@@ -2,7 +2,19 @@
 import { useState, useMemo } from "react";
 import DocumentationContent from "@/components/DocumentationContent";
 import Link from "next/link";
-import { Book, Palette, Layers, Box, Settings, Download, ArrowLeft, Search, Play, Menu } from "lucide-react";
+import {
+  Book,
+  Palette,
+  Layers,
+  Box,
+  Settings,
+  Download,
+  ArrowLeft,
+  Search,
+  Play,
+  Menu,
+  Users,
+} from "lucide-react";
 import { SEARCHABLE_CONTENT } from "@/lib/docs";
 import { Metadata } from "next";
 import { Drawer } from "vaul";
@@ -70,6 +82,17 @@ const DOCUMENTATION_SECTIONS = [
       { id: "preview", title: "Live Preview" },
       { id: "export", title: "Theme Export" },
       { id: "components", title: "Components" },
+    ],
+  },
+  {
+    id: "community",
+    icon: <Users className="w-5 h-5" />, // Import Users from lucide-react
+    title: "Community",
+    subsections: [
+      { id: "overview", title: "Overview" },
+      { id: "publishing", title: "Publishing Themes" },
+      { id: "saving", title: "Saving Themes" },
+      { id: "interaction", title: "Community Interaction" },
     ],
   },
   {

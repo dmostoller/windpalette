@@ -3,9 +3,10 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { ThemeColors } from "@/types/theme";
-import { Trash2, Search, X, CircleAlert } from "lucide-react";
+import { Share2, Trash2, Search, X, CircleAlert, Loader2, Info } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "sonner";
 
 // Add SkeletonCard component at the top of file
 const SkeletonCard = () => (
@@ -56,6 +57,7 @@ export function ThemesList() {
   const { data: session } = useSession();
   const { setThemeColors, setThemeGradients } = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
+  const [publishing, setPublishing] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -131,6 +133,50 @@ export function ThemesList() {
     }
   };
 
+  const handlePublish = async (e: React.MouseEvent, theme: Theme) => {
+    e.stopPropagation();
+
+    if (!session?.user) return;
+
+    setPublishing(theme.id);
+    try {
+      const publishData = {
+        name: theme.name,
+        colors: theme.colors,
+        gradients: theme.gradients,
+        visibleColors: Object.keys(theme.colors).length,
+        authorId: session.user.id,
+      };
+
+      // console.log("Publishing theme:", publishData);
+      const response = await fetch("/api/themes/community", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(publishData),
+      });
+      // console.log("Response:", response);
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          toast.error("You've already published this theme to the community");
+          return;
+        }
+        throw new Error(data.error || "Failed to publish theme");
+      }
+
+      // Show success message
+      toast.success("Theme published successfully!");
+    } catch (error) {
+      toast.error("Failed to publish theme:" + error);
+      // Show error message to user
+    } finally {
+      setPublishing(null);
+    }
+  };
+
   const filteredThemes = themes.filter((theme) => {
     if (!searchQuery) return true;
 
@@ -150,6 +196,13 @@ export function ThemesList() {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center gap-3 p-4 text-sm bg-[var(--card)] rounded-lg border border-[var(--card-border)]">
+        <Info className="w-4 h-4 text-[var(--primary)]" />
+        <p className="text-[var(--muted-foreground)]">
+          Click the <Share2 className="w-4 h-4 inline mx-1" /> button on any theme to publish it to the
+          community gallery
+        </p>
+      </div>
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
         <input
@@ -187,12 +240,27 @@ export function ThemesList() {
               className="p-4 bg-[var(--card-background)] border rounded-lg border-[var(--card-border)] hover:border-[var(--primary)] cursor-pointer relative group" // Added relative and group
               onClick={() => handleThemeSelect(theme)}
             >
-              <button
-                onClick={(e) => handleDelete(e, theme.id)}
-                className="absolute text-gray-500 top-2 right-2 p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-500"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={(e) => handlePublish(e, theme)}
+                  disabled={publishing === theme.id}
+                  className="p-2 text-gray-500 hover:text-[var(--primary)] disabled:opacity-50"
+                  title="Publish to Community"
+                >
+                  {publishing === theme.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Share2 className="w-4 h-4" />
+                  )}
+                </button>
+                <button
+                  onClick={(e) => handleDelete(e, theme.id)}
+                  className="p-2 text-gray-500 hover:text-red-500"
+                  title="Delete Theme"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
               <h3 className="font-bold">{theme.name}</h3>
               <div className="flex gap-2 mt-2">
                 {Object.entries(theme.colors).map(([key, value]) => (

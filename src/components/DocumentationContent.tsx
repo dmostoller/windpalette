@@ -487,6 +487,102 @@ module.exports = {
         </section>
       </div>
     ),
+    community: (
+      <div className="space-y-8">
+        <section id="community-overview">
+          <h2 className="text-3xl font-bold mb-4">Community Themes</h2>
+          <p className="text-[var(--text-secondary)] mb-6">
+            Discover, save, and share themes with the Theme Generator community. Browse through user-created
+            themes and find inspiration for your next project.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">Features</h3>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Browse community-created themes</li>
+                <li>Preview themes in real-time</li>
+                <li>Save themes to your archive</li>
+                <li>Share your own themes</li>
+              </ul>
+            </div>
+
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">Benefits</h3>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>Find inspiration from other creators</li>
+                <li>Test themes before saving</li>
+                <li>Build your theme collection</li>
+                <li>Contribute to the community</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="community-publishing">
+          <h2 className="text-2xl font-bold mb-4">Publishing Your Themes</h2>
+          <div className="space-y-4">
+            <p className="text-[var(--text-secondary)]">
+              Share your themes with the community in just a few clicks:
+            </p>
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">How to Publish</h3>
+              <ol className="list-decimal pl-6 text-[var(--text-secondary)] space-y-2">
+                <li>Create and customize your theme</li>
+                <li>Save it to your archive</li>
+                <li>Click the &quot;Publish&quot; button in your archive</li>
+                <li>Your theme will appear in the community gallery</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section id="community-saving">
+          <h2 className="text-2xl font-bold mb-4">Saving Community Themes</h2>
+          <div className="space-y-4">
+            <p className="text-[var(--text-secondary)]">
+              When you find a theme you like, you can save it to your personal archive:
+            </p>
+            <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+              <h3 className="text-xl font-medium mb-3">Features</h3>
+              <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                <li>One-click save to your archive</li>
+                <li>Preview before saving</li>
+                <li>Try with shadcn/ui components</li>
+                <li>Modify saved themes as needed</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="community-interaction">
+          <h2 className="text-2xl font-bold mb-4">Community Interaction</h2>
+          <div className="space-y-4">
+            <p className="text-[var(--text-secondary)]">Engage with the Theme Generator community:</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+                <h3 className="text-xl font-medium mb-3">For Theme Creators</h3>
+                <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                  <li>Share your unique themes</li>
+                  <li>Get save counts and engagement</li>
+                  <li>Build your theme portfolio</li>
+                  <li>Inspire other developers</li>
+                </ul>
+              </div>
+              <div className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)]">
+                <h3 className="text-xl font-medium mb-3">For Theme Users</h3>
+                <ul className="list-disc pl-6 text-[var(--text-secondary)]">
+                  <li>Discover new color combinations</li>
+                  <li>Save favorite themes</li>
+                  <li>Preview themes in context</li>
+                  <li>Build your collection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    ),
     gradients: (
       <div className="space-y-8">
         <section id="gradients-gradient-types">

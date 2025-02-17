@@ -1,10 +1,10 @@
-# WindPallete
+# WindPalette
 
 ## About
 
-WindPallete is a powerful tool designed to help developers create and manage consistent color themes for their applications. After encountering countless paywalls while trying to create themes for our projects, we decided to build the tool we wished existed.
+WindPalette is a powerful tool designed to help developers create and manage consistent color themes for their applications. After encountering countless paywalls while trying to create themes for our projects, we decided to build the tool we wished existed.
 
-That's why WindPallete is and always will be free, open source, and supported by the community.
+That's why WindPalette is and always will be free, open source, and supported by the community.
 
 ## Features
 
@@ -40,12 +40,12 @@ That's why WindPallete is and always will be free, open source, and supported by
 1. Clone the repository:
 
 ```
-git clone https://github.com/dmostoller/windpallete.git
+git clone https://github.com/dmostoller/windpalette.git
 ```
 
 2. Install dependencies:
 
-```cd windpallete
+```cd windpalette
 npm install
 ```
 
@@ -112,7 +112,7 @@ This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LIC
 
 - 📧 **Email**: [dave.mostoller.dev@gmail.com](mailto:dave.mostoller.dev@gmail.com)
 - 💬 **Discord**: [Join our server](https://discord.gg/Gxh3ZzeXxQ)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/dmostoller/windpallete/issues)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/dmostoller/windpalette/issues)
 
 ## Acknowledgments 🙏
 

@@ -43,9 +43,7 @@ export async function getUserThemes(userId: string): Promise<Theme[]> {
   if (!themeIds.length) return [];
 
   const themes = await Promise.all(
-    (themeIds as string[]).map((id) =>
-      redis.hgetall<Record<string, unknown>>(id),
-    ),
+    (themeIds as string[]).map((id) => redis.hgetall<Record<string, unknown>>(id)),
   );
 
   return themes.filter(
