@@ -9,6 +9,8 @@ import { Eye, Save, Loader2, Blend, Palette } from "lucide-react";
 import { Tooltip } from "@/components/Tooltip";
 import { toast } from "sonner";
 import Image from "next/image";
+import { ThemeCardSkeleton } from "./skeletons/ThemeCardSkeleton";
+import Skeleton from "react-loading-skeleton";
 
 export default function CommunityPage() {
   const [themes, setThemes] = useState<CommunityTheme[]>([]);
@@ -92,8 +94,34 @@ export default function CommunityPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-[50vh]">
-        <Loader2 className="w-6 h-6 animate-spin text-[var(--muted-foreground)]" />
+      <div className="max-w-5xl mx-auto p-4">
+        {/* Header Skeleton */}
+        <div className="mb-12">
+          <Skeleton
+            height={36}
+            width={240}
+            className=""
+            baseColor="var(--skeleton-base-color)"
+            highlightColor="var(--skeleton-highlight-color)"
+          />
+          <Skeleton
+            height={48}
+            className="mb-6"
+            baseColor="var(--skeleton-base-color)"
+            highlightColor="var(--skeleton-highlight-color)"
+          />
+          <Skeleton
+            height={72}
+            baseColor="var(--skeleton-base-color)"
+            highlightColor="var(--skeleton-highlight-color)"
+            className="dark:opacity-75 mb-4"
+          />
+        </div>
+        <div className="space-y-4">
+          {[...Array(5)].map((_, i) => (
+            <ThemeCardSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   }
