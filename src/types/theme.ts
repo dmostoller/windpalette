@@ -29,13 +29,25 @@ export interface Theme {
     | { colors: Array<{ color: string; active: boolean }> };
 }
 
-export interface CommunityTheme extends Theme {
+export interface CommunityTheme {
+  id: string;
+  name: string;
   saveCount: number;
   published: boolean;
-  author: {
-    name: string;
-  };
   visibleColors: number;
+  author: {
+    name: string | null;
+  };
+  colors: Array<{
+    id: string;
+    name: string;
+    value: string;
+  }>;
+  gradients: Array<{
+    id: string;
+    color: string;
+    active: boolean;
+  }>;
 }
 
 export interface StatusColors {

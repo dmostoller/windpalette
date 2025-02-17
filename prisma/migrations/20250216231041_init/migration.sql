@@ -13,8 +13,6 @@ CREATE TABLE "User" (
 CREATE TABLE "Theme" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "colors" JSONB NOT NULL,
-    "gradients" JSONB,
     "visibleColors" INTEGER NOT NULL DEFAULT 1,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "authorId" TEXT NOT NULL,
@@ -23,6 +21,30 @@ CREATE TABLE "Theme" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Theme_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ThemeColor" (
+    "id" TEXT NOT NULL,
+    "themeId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ThemeColor_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Gradient" (
+    "id" TEXT NOT NULL,
+    "themeId" TEXT NOT NULL,
+    "color" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Gradient_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -43,6 +65,12 @@ CREATE UNIQUE INDEX "ThemeSave_themeId_userId_key" ON "ThemeSave"("themeId", "us
 
 -- AddForeignKey
 ALTER TABLE "Theme" ADD CONSTRAINT "Theme_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ThemeColor" ADD CONSTRAINT "ThemeColor_themeId_fkey" FOREIGN KEY ("themeId") REFERENCES "Theme"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Gradient" ADD CONSTRAINT "Gradient_themeId_fkey" FOREIGN KEY ("themeId") REFERENCES "Theme"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ThemeSave" ADD CONSTRAINT "ThemeSave_themeId_fkey" FOREIGN KEY ("themeId") REFERENCES "Theme"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
