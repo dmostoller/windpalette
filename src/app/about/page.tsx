@@ -1,4 +1,4 @@
-import { Paintbrush, Gift, Code, Heart, Users, Palette } from "lucide-react";
+import { Paintbrush, Gift, Code, Heart, Users, Palette, Share2 } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -106,6 +106,44 @@ export default function About() {
                 <p className="text-sm italic">
                   &quot;WindPalette makes it incredibly easy to create and preview themes for shadcn/ui. No
                   more manual color adjustments or guessing how your theme will look.&quot;
+                </p>
+              </div>
+            </div>
+          </section>
+          <section className="p-6 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <Share2 className="w-6 h-6 text-[var(--primary)]" /> {/* Import Share2 from lucide-react */}
+              <h2 className="text-2xl font-semibold">Community Themes</h2>
+            </div>
+            <div className="space-y-4 text-[var(--text-secondary)]">
+              <p>
+                WindPalette features a vibrant community of theme creators and designers. Our community-driven
+                platform allows you to:
+              </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <h3 className="font-medium">For Theme Creators</h3>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Publish your themes to inspire others</li>
+                    <li>Build your collection of custom themes</li>
+                    <li>Share your design expertise</li>
+                    <li>Get feedback from the community</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="font-medium">For Theme Users</h3>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Browse community-created themes</li>
+                    <li>Preview themes in real-time</li>
+                    <li>Save themes to your archive</li>
+                    <li>Use themes in your projects</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-6 p-4 bg-[var(--card)] border border-[var(--card-border)] rounded-lg">
+                <p className="text-sm italic">
+                  &quot;The community gallery is an incredible source of inspiration. I love being able to
+                  discover and save themes created by other developers.&quot;
                 </p>
               </div>
             </div>
