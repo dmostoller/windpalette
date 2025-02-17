@@ -3,9 +3,10 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { ThemeColors } from "@/types/theme";
-import { Share2, Trash2, Search, X, CircleAlert, Loader2 } from "lucide-react";
+import { Share2, Trash2, Search, X, CircleAlert, Loader2, Info } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "sonner";
 
 // Add SkeletonCard component at the top of file
 const SkeletonCard = () => (
@@ -146,7 +147,8 @@ export function ThemesList() {
         visibleColors: Object.keys(theme.colors).length,
         authorId: session.user.id,
       };
-      console.log("Publishing theme:", publishData);
+
+      // console.log("Publishing theme:", publishData);
       const response = await fetch("/api/themes/community", {
         method: "POST",
         headers: {
@@ -154,17 +156,21 @@ export function ThemesList() {
         },
         body: JSON.stringify(publishData),
       });
-      console.log("Response:", response);
+      // console.log("Response:", response);
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 409) {
+          toast.error("You've already published this theme to the community");
+          return;
+        }
         throw new Error(data.error || "Failed to publish theme");
       }
 
       // Show success message
-      console.log("Theme published successfully!");
+      toast.success("Theme published successfully!");
     } catch (error) {
-      console.error("Failed to publish theme:", error);
+      toast.error("Failed to publish theme:" + error);
       // Show error message to user
     } finally {
       setPublishing(null);
@@ -190,6 +196,13 @@ export function ThemesList() {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center gap-3 p-4 text-sm bg-[var(--card)] rounded-lg border border-[var(--card-border)]">
+        <Info className="w-4 h-4 text-[var(--primary)]" />
+        <p className="text-[var(--muted-foreground)]">
+          Click the <Share2 className="w-4 h-4 inline mx-1" /> button on any theme to publish it to the
+          community gallery
+        </p>
+      </div>
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
         <input

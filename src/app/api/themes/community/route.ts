@@ -10,7 +10,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  console.log("Publishing theme...");
+  // console.log("Publishing theme...");
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user) {
@@ -50,25 +50,34 @@ export async function POST(req: Request) {
       );
     }
 
-    const theme = await publishTheme({
-      name: data.name.trim(),
-      colors: data.colors,
-      gradients: data.gradients,
-      visibleColors: data.visibleColors || 1,
-      authorId: user.id, // Use the upserted user's ID
-    });
+    try {
+      const theme = await publishTheme({
+        name: data.name.trim(),
+        colors: data.colors,
+        gradients: data.gradients,
+        visibleColors: data.visibleColors || 1,
+        authorId: user.id,
+      });
 
-    return NextResponse.json({
-      success: true,
-      theme: {
-        id: theme.id,
-        name: theme.name,
-        colors: theme.colors,
-        gradients: theme.gradients,
-        author: theme.author,
-        visibleColors: theme.visibleColors,
-      },
-    });
+      return NextResponse.json({
+        success: true,
+        theme: {
+          id: theme.id,
+          name: theme.name,
+          colors: theme.colors,
+          gradients: theme.gradients,
+          author: theme.author,
+          visibleColors: theme.visibleColors,
+        },
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes("already published")) {
+          return NextResponse.json({ error: "You have already published this theme" }, { status: 409 });
+        }
+      }
+      throw error; // Re-throw for general error handling
+    }
   } catch (error) {
     console.error("Failed to publish theme:", error);
 

@@ -7,15 +7,15 @@ interface AuthButtonProps {
 
   setActiveTab: (
     item:
-      | "browse"
+      | "create"
       | "colors"
+      | "archive"
+      | "community"
       | "components"
       | "gradients"
       | "buttons"
-      | "archive"
       | "help"
-      | "user"
-      | "settings",
+      | "user",
   ) => void;
 }
 

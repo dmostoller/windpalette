@@ -30,21 +30,7 @@ export function GenerateRandomThemeButton() {
 
   return (
     <div className="space-y-6">
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-[var(--card-border)]"></div>
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="px-2 text-[var(--muted-foreground)] bg-[var(--card-background)]">or</span>
-        </div>
-      </div>
       <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Custom Theme Generation</h3>
-          <p className="text-sm text-[var(--muted-foreground)]">
-            Fine-tune your theme by adjusting specific parameters for more controlled results.
-          </p>
-        </div>
         <div className="space-y-4 md:space-y-0 md:grid lg:grid-cols-3 md:gap-4 lg:space-y-0 lg:grid xl:grid-cols-6 lg:gap-4">
           {/* Color Family Dropdown */}
           <div className="space-y-2">

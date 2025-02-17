@@ -66,6 +66,19 @@ export async function publishTheme(themeData: PublishThemeParams) {
       throw new Error("Author ID is required");
     }
 
+    // Check for existing published theme by this author with the same name
+    const themeToSave = await prisma.theme.findFirst({
+      where: {
+        name: themeData.name.trim(),
+        authorId: themeData.authorId,
+        published: true,
+      },
+    });
+
+    if (themeToSave) {
+      throw new Error("You have already published a theme with this name");
+    }
+
     // First check if user exists
     const user = await prisma.user.findUnique({
       where: { id: themeData.authorId },
@@ -133,7 +146,7 @@ export async function publishTheme(themeData: PublishThemeParams) {
   } catch (error) {
     console.error("Error publishing theme:", {
       error,
-      code: error instanceof Error ? (error as any).code : undefined,
+      code: error instanceof Error ? (error as { code?: string | number }).code : undefined,
       message: error instanceof Error ? error.message : "Unknown error",
     });
     throw error;
@@ -155,13 +168,7 @@ export async function saveThemeToArchive(themeId: string, userId: string) {
   }
 
   try {
-    const userThemes = await getUserThemes(userId);
-    const hasTheme = userThemes?.some((theme) => theme.id === themeId);
-
-    if (hasTheme) {
-      throw new Error("Theme already saved by user");
-    }
-    const existingTheme = await prisma.theme.findUnique({
+    const themeToSave = await prisma.theme.findUnique({
       where: { id: themeId },
       select: {
         id: true,
@@ -182,8 +189,27 @@ export async function saveThemeToArchive(themeId: string, userId: string) {
       },
     });
 
-    if (!existingTheme) {
+    if (!themeToSave) {
       throw new Error("Theme not found");
+    }
+
+    // Check if theme with same name exists in user's Redis archive
+    const userThemes = await getUserThemes(userId);
+    const hasThemeInRedis = userThemes?.some(
+      (theme) => theme.name.toLowerCase() === themeToSave.name.toLowerCase(),
+    );
+
+    // Check if theme with same name exists in user's Prisma archive
+    const existingUserTheme = await prisma.theme.findFirst({
+      where: {
+        name: themeToSave.name,
+        authorId: userId,
+        published: false, // Only check unpublished themes in their archive
+      },
+    });
+
+    if (hasThemeInRedis || existingUserTheme) {
+      throw new Error("A theme with this name already exists in your archive");
     }
 
     // Update theme save count
@@ -202,8 +228,8 @@ export async function saveThemeToArchive(themeId: string, userId: string) {
     // Prepare and save to Redis
     const redisPayload: RedisThemePayload = {
       userId,
-      name: existingTheme.name,
-      colors: existingTheme.colors.reduce(
+      name: themeToSave.name,
+      colors: themeToSave.colors.reduce(
         (acc, color) => ({
           ...acc,
           [color.name]: color.value,
@@ -211,12 +237,12 @@ export async function saveThemeToArchive(themeId: string, userId: string) {
         {} as Record<string, string>,
       ),
       gradients: {
-        colors: existingTheme.gradients.map((g) => ({
+        colors: themeToSave.gradients.map((g) => ({
           color: g.color,
           active: g.active,
         })),
       },
-      visibleColors: existingTheme.visibleColors,
+      visibleColors: themeToSave.visibleColors,
     };
 
     console.log("Saving theme to Redis:", redisPayload);

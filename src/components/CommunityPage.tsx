@@ -53,7 +53,12 @@ export default function CommunityPage() {
         body: JSON.stringify({ themeId }),
       });
 
-      if (!res.ok) throw new Error("Failed to save theme");
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.error || "Failed to save theme");
+        return;
+      }
 
       // Refresh themes
       const updatedRes = await fetch("/api/themes/community");
@@ -61,8 +66,8 @@ export default function CommunityPage() {
       setThemes(updated);
       toast.success("Theme saved successfully");
     } catch (error) {
+      console.error("Save error:", error);
       toast.error("Failed to save theme");
-      console.error(error);
     } finally {
       setSaving(null);
     }
@@ -106,8 +111,8 @@ export default function CommunityPage() {
         <div className="flex gap-4 items-center p-4 bg-[var(--card)] rounded-lg border border-[var(--card-border)]">
           <Palette className="w-5 h-5 text-[var(--primary)]" />
           <p className="text-sm">
-            <span className="font-medium">Pro tip:</span> Click the preview button to see how a theme looks in
-            real-time, or save it to your archive for later use.
+            <span className="font-medium">Pro tip:</span> Click the buttons to see how a theme looks in
+            real-time, demo it with shadcn components, or save it to your archive for later use.
           </p>
         </div>
       </div>
@@ -220,7 +225,7 @@ export default function CommunityPage() {
                     ["--hover-color" as string]:
                       theme.colors.find((c) => c.name === "primary")?.value || "var(--primary)",
                   }}
-                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)]"
+                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)] hover:text-white group"
                 >
                   <Eye className="w-4 h-4" />
                   <span className="hidden md:inline">Preview</span>
@@ -238,7 +243,7 @@ export default function CommunityPage() {
                   }).toString()}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)]"
+                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)] hover:text-white group"
                   style={{
                     borderColor:
                       theme.colors.find((c) => c.name === "secondary")?.value || "var(--button-bordercolor)",
@@ -270,7 +275,7 @@ export default function CommunityPage() {
                 <button
                   onClick={() => handleSave(theme.id)}
                   disabled={!session || saving === theme.id}
-                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)]"
+                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)] hover:text-white group"
                   style={{
                     borderColor:
                       theme.colors.find((c) => c.name === "accent")?.value || "var(--button-bordercolor)",

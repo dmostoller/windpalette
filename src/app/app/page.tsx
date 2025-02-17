@@ -45,6 +45,7 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState<DefaultTab>(settings.defaultTab);
   const isSidebarCollapsed = settings.sidebarState === "collapsed";
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activeGenerationTab, setActiveGenerationTab] = useState<"ai" | "random">("ai");
 
   type ThemeMode = "light" | "dark" | "system";
   const [theme, setTheme] = useState<ThemeMode>("system");
@@ -249,21 +250,61 @@ function AppContent() {
           {activeTab === "create" && (
             <div className="space-y-8">
               <div className="space-y-6 p-4 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-lg font-semibold">AI Theme Generation</h3>
-                    <div className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">
-                      Fast & Easy
-                    </div>
-                  </div>
-                  <p className="text-sm text-[var(--muted-foreground)]">
-                    Simply describe your desired theme using keywords, and AI will generate a matching color
-                    palette.
-                  </p>
-                  <GenerateAiPalette initialPrompt={prompt || ""} />
+                {/* Tabs */}
+                <div className="flex space-x-1 border-b border-[var(--card-border)]">
+                  <button
+                    onClick={() => setActiveGenerationTab("ai")}
+                    className={`px-4 py-2 text-sm font-medium -mb-px ${
+                      activeGenerationTab === "ai"
+                        ? "border-b-2 border-[var(--primary)] text-[var(--primary)]"
+                        : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                    }`}
+                  >
+                    Generate with AI
+                  </button>
+                  <button
+                    onClick={() => setActiveGenerationTab("random")}
+                    className={`px-4 py-2 text-sm font-medium -mb-px ${
+                      activeGenerationTab === "random"
+                        ? "border-b-2 border-[var(--primary)] text-[var(--primary)]"
+                        : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                    }`}
+                  >
+                    Generate with Options
+                  </button>
                 </div>
-                <GenerateRandomThemeButton />
+
+                {/* Tab Content */}
+                {activeGenerationTab === "ai" ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-lg font-semibold">AI Theme Generation</h3>
+                      <div className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">
+                        Fast & Easy
+                      </div>
+                    </div>
+                    <p className="text-sm text-[var(--muted-foreground)]">
+                      Simply describe your desired theme using keywords, and AI will generate a matching color
+                      palette.
+                    </p>
+                    <GenerateAiPalette initialPrompt={prompt || ""} />
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-lg font-semibold">Customer Theme Generation</h3>
+                      <div className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">
+                        Explore & Discover
+                      </div>
+                    </div>
+                    <p className="text-sm text-[var(--muted-foreground)]">
+                      Fine-tune your theme by adjusting specific parameters for more controlled results.
+                    </p>
+                    <GenerateRandomThemeButton />
+                  </div>
+                )}
               </div>
+
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 <ColorPicker colorKey="primary" label="Primary Color" />
 

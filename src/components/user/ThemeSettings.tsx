@@ -115,11 +115,13 @@ export default function ThemeSettings() {
               value={activeTab}
               onChange={(e) => handleTabChange(e.target.value as DefaultTab)}
             >
+              <option value="create">Create</option>
               <option value="colors">Colors</option>
+              <option value="archive">Archive</option>
+              <option value="community">Community</option>
               <option value="components">Components</option>
               <option value="gradients">Gradients</option>
               <option value="buttons">Buttons</option>
-              <option value="saved themes">Saved Themes</option>
               <option value="browse">Browse</option>
               <option value="user">User</option>
             </select>
