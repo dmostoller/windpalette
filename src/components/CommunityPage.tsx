@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { ThemeCardSkeleton } from "./skeletons/ThemeCardSkeleton";
 import Skeleton from "react-loading-skeleton";
+import { Trash2 } from "lucide-react";
 
 export default function CommunityPage() {
   const [themes, setThemes] = useState<CommunityTheme[]>([]);
@@ -18,6 +19,8 @@ export default function CommunityPage() {
   const [saving, setSaving] = useState<string | null>(null);
   const { data: session } = useSession();
   const { setThemeColors } = useTheme();
+  const ADMIN_EMAIL = "dmostoller@gmail.com";
+  const isAdmin = session?.user?.email === ADMIN_EMAIL;
 
   useEffect(() => {
     const fetchThemes = async () => {
@@ -92,6 +95,27 @@ export default function CommunityPage() {
     toast.success("Theme preview applied");
   };
 
+  const handleDelete = async (themeId: string) => {
+    if (!isAdmin) return;
+
+    try {
+      const res = await fetch(`/api/themes/community/${themeId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete theme");
+      }
+
+      // Remove the theme from the list
+      setThemes(themes.filter((theme) => theme.id !== themeId));
+      toast.success("Theme deleted successfully");
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast.error("Failed to delete theme");
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto p-4">
@@ -162,9 +186,9 @@ export default function CommunityPage() {
               y: -2,
             }}
           >
-            <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="flex flex-col lg:flex-row items-center gap-6">
               {/* Author and Theme Info */}
-              <div className="flex items-start gap-4 md:w-1/3">
+              <div className="flex items-start gap-4 lg:w-1/3">
                 <div
                   className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2"
                   style={{
@@ -244,7 +268,7 @@ export default function CommunityPage() {
               </div>
 
               {/* Actions */}
-              <div className="flex md:flex-col gap-2 justify-end md:w-36">
+              <div className="flex lg:flex-col gap-2 justify-end lg:w-36">
                 <button
                   onClick={() => handlePreview(theme)}
                   style={{
@@ -256,7 +280,7 @@ export default function CommunityPage() {
                   className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)] hover:text-white group"
                 >
                   <Eye className="w-4 h-4" />
-                  <span className="hidden md:inline">Preview</span>
+                  <span className="hidden lg:inline">Preview</span>
                 </button>
 
                 <a
@@ -297,7 +321,7 @@ export default function CommunityPage() {
                       />
                     </div>
                   </div>
-                  <span className="hidden md:inline">shadcn</span>
+                  <span className="hidden lg:inline">shadcn</span>
                 </a>
 
                 <button
@@ -316,10 +340,19 @@ export default function CommunityPage() {
                   ) : (
                     <>
                       <Save className="w-4 h-4" />
-                      <span className="hidden md:inline">Save</span>
+                      <span className="hidden lg:inline">Save</span>
                     </>
                   )}
                 </button>
+                {isAdmin && (
+                  <button
+                    onClick={() => handleDelete(theme.id)}
+                    className="p-2 border border-red-200 rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-red-500 hover:text-white group"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    <span className="hidden lg:inline">Delete</span>
+                  </button>
+                )}
               </div>
             </div>
           </motion.div>
