@@ -15,7 +15,7 @@ const defaultSettings: Settings = {
   colorScale: "5",
   initialColors: "1",
   sidebarState: "expanded",
-  defaultTab: "colors",
+  defaultTab: "create",
 };
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);

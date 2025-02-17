@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { saveTheme } from "@/lib/redis";
+import { saveTheme, getUserThemes } from "@/lib/redis";
 
 export async function getPopularThemes() {
   try {
@@ -32,18 +32,6 @@ export async function getPopularThemes() {
             email: true,
           },
         },
-        saves: {
-          select: {
-            id: true,
-            userId: true,
-            createdAt: true,
-          },
-        },
-        _count: {
-          select: {
-            saves: true,
-          },
-        },
       },
     });
 
@@ -54,6 +42,7 @@ export async function getPopularThemes() {
     return [];
   }
 }
+
 interface PublishThemeParams {
   name: string;
   colors: Record<string, string>;
@@ -66,47 +55,98 @@ interface PublishThemeParams {
 
 export async function publishTheme(themeData: PublishThemeParams) {
   try {
-    if (!themeData.colors) {
-      console.error("themeData.colors is null or undefined");
-      return null;
+    // Validate input data
+    if (!themeData.name?.trim()) {
+      throw new Error("Theme name is required");
+    }
+    if (!themeData.colors || Object.keys(themeData.colors).length === 0) {
+      throw new Error("At least one color is required");
+    }
+    if (!themeData.authorId) {
+      throw new Error("Author ID is required");
     }
 
-    const theme = await prisma.theme.create({
-      data: {
-        name: themeData.name,
-        visibleColors: themeData.visibleColors,
-        authorId: themeData.authorId,
-        published: true,
-        colors: {
-          createMany: {
-            data: Object.entries(themeData.colors).map(([name, value]) => ({
-              name,
-              value,
-            })),
-          },
-        },
-        gradients: {
-          createMany: {
-            data: (themeData.gradients.colors || []).map((gradient) => ({
-              color: gradient.color,
-              active: gradient.active,
-            })),
-          },
-        },
-      },
-      include: {
-        author: {
-          select: {
-            name: true,
-          },
-        },
-      },
+    // First check if user exists
+    const user = await prisma.user.findUnique({
+      where: { id: themeData.authorId },
+      select: { id: true },
     });
+
+    if (!user) {
+      throw new Error("Invalid author ID");
+    }
+
+    // Create theme with transaction
+    const theme = await prisma.$transaction(async (tx) => {
+      const newTheme = await tx.theme.create({
+        data: {
+          name: themeData.name.trim(),
+          visibleColors: themeData.visibleColors || 1,
+          authorId: themeData.authorId,
+          published: true,
+          saveCount: 0,
+          colors: {
+            createMany: {
+              data: Object.entries(themeData.colors).map(([name, value]) => ({
+                name: name.toLowerCase(),
+                value: value.toLowerCase(),
+              })),
+            },
+          },
+          gradients: {
+            createMany: {
+              data: (themeData.gradients?.colors || []).map((gradient) => ({
+                color: gradient.color.toLowerCase(),
+                active: gradient.active,
+              })),
+            },
+          },
+        },
+        include: {
+          colors: {
+            select: {
+              id: true,
+              name: true,
+              value: true,
+            },
+          },
+          gradients: {
+            select: {
+              id: true,
+              color: true,
+              active: true,
+            },
+          },
+          author: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      });
+
+      return newTheme;
+    });
+
     return theme;
   } catch (error) {
-    console.error("Error publishing theme:", error);
-    return null;
+    console.error("Error publishing theme:", {
+      error,
+      code: error instanceof Error ? (error as any).code : undefined,
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+    throw error;
   }
+}
+interface RedisThemePayload {
+  userId: string;
+  name: string;
+  colors: Record<string, string>;
+  gradients: {
+    colors: Array<{ color: string; active: boolean }>;
+  };
+  visibleColors: number;
 }
 
 export async function saveThemeToArchive(themeId: string, userId: string) {
@@ -115,70 +155,82 @@ export async function saveThemeToArchive(themeId: string, userId: string) {
   }
 
   try {
-    // First check if theme exists
-    const theme = await prisma.theme.findUnique({
+    const userThemes = await getUserThemes(userId);
+    const hasTheme = userThemes?.some((theme) => theme.id === themeId);
+
+    if (hasTheme) {
+      throw new Error("Theme already saved by user");
+    }
+    const existingTheme = await prisma.theme.findUnique({
       where: { id: themeId },
-      include: {
-        colors: true,
-        gradients: true,
+      select: {
+        id: true,
+        name: true,
+        visibleColors: true,
+        colors: {
+          select: {
+            name: true,
+            value: true,
+          },
+        },
+        gradients: {
+          select: {
+            color: true,
+            active: true,
+          },
+        },
       },
     });
 
-    if (!theme) {
+    if (!existingTheme) {
       throw new Error("Theme not found");
     }
 
-    // Use a single transaction for all DB operations
-    const result = await prisma.$transaction(async (tx) => {
-      // Create theme save
-      const themeSave = await tx.themeSave.create({
-        data: {
-          userId,
-          themeId,
-        },
-      });
-
-      // Update theme save count
-      const updatedTheme = await tx.theme.update({
-        where: { id: themeId },
-        data: { saveCount: { increment: 1 } },
-        include: {
-          colors: true,
-          gradients: true,
-          author: {
-            select: { name: true },
-          },
-        },
-      });
-
-      return { themeSave, updatedTheme };
+    // Update theme save count
+    const updatedTheme = await prisma.theme.update({
+      where: { id: themeId },
+      data: {
+        saveCount: { increment: 1 },
+      },
+      select: {
+        id: true,
+        name: true,
+        saveCount: true,
+      },
     });
 
-    // After successful DB transaction, save to Redis
-    const redisResult = await saveTheme({
+    // Prepare and save to Redis
+    const redisPayload: RedisThemePayload = {
       userId,
-      name: theme.name,
-      colors: theme.colors.reduce(
+      name: existingTheme.name,
+      colors: existingTheme.colors.reduce(
         (acc, color) => ({
           ...acc,
           [color.name]: color.value,
         }),
-        {},
+        {} as Record<string, string>,
       ),
       gradients: {
-        colors: theme.gradients.map((g) => ({
+        colors: existingTheme.gradients.map((g) => ({
           color: g.color,
           active: g.active,
         })),
       },
-    });
+      visibleColors: existingTheme.visibleColors,
+    };
+
+    console.log("Saving theme to Redis:", redisPayload);
+    const redisResult = await saveTheme(redisPayload);
 
     return {
-      ...result,
+      theme: updatedTheme,
       redis: redisResult,
     };
   } catch (error) {
-    console.error("Error saving theme to archive:", error);
+    console.error("Error saving theme:", {
+      error,
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
     throw error;
   }
 }

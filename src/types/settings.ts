@@ -3,8 +3,8 @@ export type ColorFormat = "HEX" | "RGB" | "HSL";
 export type ExportFormat = "Tailwind Variables" | "CSS Variables" | "Tailwind Config" | "SCSS Variables";
 export type ColorScale = "1" | "3" | "5" | "7" | "9";
 export type DefaultTab =
-  | "browse"
   | "colors"
+  | "create"
   | "components"
   | "gradients"
   | "buttons"

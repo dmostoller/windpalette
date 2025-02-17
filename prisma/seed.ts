@@ -2,36 +2,27 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Clean up existing data
-  await prisma.themeSave.deleteMany({});
-  await prisma.themeColor.deleteMany({});
+  // Clear existing data
   await prisma.gradient.deleteMany({});
+  await prisma.themeColor.deleteMany({});
   await prisma.theme.deleteMany({});
   await prisma.user.deleteMany({});
 
-  // Create test users
-  const user1 = await prisma.user.create({
+  // Create test user
+  const user = await prisma.user.create({
     data: {
       email: "test@example.com",
       name: "Test User",
     },
   });
 
-  const user2 = await prisma.user.create({
-    data: {
-      email: "demo@example.com",
-      name: "Demo User",
-    },
-  });
-
   // Create sample themes
-  const theme1 = await prisma.theme.create({
+  const oceanBreeze = await prisma.theme.create({
     data: {
       name: "Ocean Breeze",
       visibleColors: 3,
       published: true,
-      authorId: user1.id,
-      saveCount: 5,
+      authorId: user.id,
       colors: {
         create: [
           { name: "primary", value: "#0EA5E9" },
@@ -47,48 +38,60 @@ async function main() {
         ],
       },
     },
+    include: {
+      colors: true,
+      gradients: true,
+    },
   });
 
-  const theme2 = await prisma.theme.create({
+  const forestNight = await prisma.theme.create({
     data: {
       name: "Forest Night",
       visibleColors: 3,
       published: true,
-      authorId: user2.id,
-      saveCount: 3,
+      authorId: user.id,
       colors: {
         create: [
           { name: "primary", value: "#166534" },
-          { name: "secondary", value: "#15803D" },
+          { name: "secondary", value: "#22C55E" },
           { name: "accent", value: "#14532D" },
         ],
       },
       gradients: {
         create: [
           { color: "#166534", active: true },
-          { color: "#15803D", active: true },
+          { color: "#22C55E", active: true },
           { color: "#14532D", active: true },
         ],
       },
     },
-  });
-
-  // Create some theme saves
-  await prisma.themeSave.create({
-    data: {
-      themeId: theme1.id,
-      userId: user2.id,
+    include: {
+      colors: true,
+      gradients: true,
     },
   });
 
-  await prisma.themeSave.create({
-    data: {
-      themeId: theme2.id,
-      userId: user1.id,
+  console.log({
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name,
     },
+    themes: [
+      {
+        id: oceanBreeze.id,
+        name: oceanBreeze.name,
+        colors: oceanBreeze.colors,
+        gradients: oceanBreeze.gradients,
+      },
+      {
+        id: forestNight.id,
+        name: forestNight.name,
+        colors: forestNight.colors,
+        gradients: forestNight.gradients,
+      },
+    ],
   });
-
-  console.log("Database has been seeded with test data! 🌱");
 }
 
 main()

@@ -36,7 +36,10 @@ export interface CommunityTheme {
   published: boolean;
   visibleColors: number;
   author: {
+    id: string;
     name: string | null;
+    email: string;
+    image: string | null;
   };
   colors: Array<{
     id: string;

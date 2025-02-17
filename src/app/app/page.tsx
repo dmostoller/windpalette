@@ -246,7 +246,7 @@ function AppContent() {
           </div>
 
           {/* Tab Content */}
-          {activeTab === "colors" && (
+          {activeTab === "create" && (
             <div className="space-y-8">
               <div className="space-y-6 p-4 bg-[var(--card-background)] border border-[var(--card-border)] rounded-lg">
                 <div className="space-y-4">
@@ -310,7 +310,7 @@ function AppContent() {
             </>
           )}
 
-          {activeTab === "browse" && <BrowseColors />}
+          {activeTab === "colors" && <BrowseColors />}
 
           {activeTab === "archive" && <ThemesList />}
 

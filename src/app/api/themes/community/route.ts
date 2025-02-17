@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { getPopularThemes, publishTheme } from "@/lib/themes";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   const themes = await getPopularThemes();
@@ -15,43 +16,71 @@ export async function POST(req: Request) {
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    // Ensure user exists in database
+    const user = await prisma.user.upsert({
+      where: {
+        email: session.user.email as string,
+      },
+      update: {
+        name: session.user.name,
+      },
+      create: {
+        email: session.user.email as string,
+        name: session.user.name,
+      },
+    });
+
     const data = await req.json();
-    // Validate required fields with more detail
-    if (!data.name || !data.colors || !data.gradients) {
+
+    // Validate required fields
+    const validationErrors = {
+      name: !data.name?.trim(),
+      colors: !data.colors || Object.keys(data.colors).length === 0,
+      gradients: !data.gradients?.colors,
+    };
+
+    if (Object.values(validationErrors).some(Boolean)) {
       return NextResponse.json(
         {
-          error: "Missing required fields",
-          details: {
-            name: !data.name,
-            colors: !data.colors,
-            gradients: !data.gradients,
-          },
+          error: "Missing or invalid fields",
+          details: validationErrors,
         },
         { status: 400 },
       );
     }
 
     const theme = await publishTheme({
-      name: data.name,
+      name: data.name.trim(),
       colors: data.colors,
       gradients: data.gradients,
       visibleColors: data.visibleColors || 1,
-      authorId: session.user.id,
+      authorId: user.id, // Use the upserted user's ID
     });
 
-    if (!theme) {
-      throw new Error("Failed to create theme");
-    }
-
-    return NextResponse.json({ success: true, theme });
+    return NextResponse.json({
+      success: true,
+      theme: {
+        id: theme.id,
+        name: theme.name,
+        colors: theme.colors,
+        gradients: theme.gradients,
+        author: theme.author,
+        visibleColors: theme.visibleColors,
+      },
+    });
   } catch (error) {
     console.error("Failed to publish theme:", error);
-    return NextResponse.json(
-      {
-        error: "Internal Server Error",
-        details: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 500 },
-    );
+
+    if (error instanceof Error) {
+      if (error.message.includes("Invalid author ID")) {
+        return NextResponse.json({ error: "User not found" }, { status: 404 });
+      }
+      if (error.message.includes("Unique constraint")) {
+        return NextResponse.json({ error: "Theme name already exists" }, { status: 409 });
+      }
+    }
+
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

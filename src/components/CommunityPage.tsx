@@ -94,109 +94,200 @@ export default function CommunityPage() {
   }
 
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold mb-8">Community Themes</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="max-w-5xl mx-auto p-4">
+      {/* Header Section */}
+      <div className="mb-12">
+        <h1 className="text-4xl font-bold mb-4">Community Themes</h1>
+        <p className="text-[var(--muted-foreground)] mb-6 max-w-2xl">
+          Discover and save themes created by the community. Each theme can be previewed, saved to your
+          personal archive, or used directly in your projects. Want to share your own themes? Publish them
+          from your archive to inspire others.
+        </p>
+        <div className="flex gap-4 items-center p-4 bg-[var(--card)] rounded-lg border border-[var(--card-border)]">
+          <Palette className="w-5 h-5 text-[var(--primary)]" />
+          <p className="text-sm">
+            <span className="font-medium">Pro tip:</span> Click the preview button to see how a theme looks in
+            real-time, or save it to your archive for later use.
+          </p>
+        </div>
+      </div>
+
+      {/* Theme List */}
+      <div className="space-y-4">
         {themes.map((theme) => (
           <motion.div
             key={theme.id}
-            className="p-6 bg-[var(--card-background)] rounded-lg border border-[var(--card-border)] hover:border-[var(--primary)] transition-colors"
-            whileHover={{ y: -4 }}
+            className="py-4 px-6 bg-[var(--card-background)] rounded-lg border-transparent border transition-colors"
+            style={
+              {
+                "--hover-border-color":
+                  theme.colors.find((c) => c.name === "primary")?.value || "var(--primary)",
+              } as React.CSSProperties
+            }
+            whileHover={{
+              borderColor: "var(--hover-border-color)",
+              y: -2,
+            }}
           >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-8 h-8 rounded-full bg-[var(--primary)] flex items-center justify-center text-white">
-                {theme.author.name?.[0] || "?"}
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              {/* Author and Theme Info */}
+              <div className="flex items-start gap-4 md:w-1/3">
+                <div
+                  className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2"
+                  style={{
+                    borderColor:
+                      theme.colors.find((c) => c.name === "primary")?.value || "var(--card-border)",
+                  }}
+                >
+                  {theme.author.image ? (
+                    <Image
+                      src={theme.author.image}
+                      alt={theme.author.name || "Author"}
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className="w-full h-full flex items-center justify-center text-foreground text-xl font-medium"
+                      style={{
+                        borderColor:
+                          theme.colors.find((c) => c.name === "primary")?.value || "var(--primary)",
+                      }}
+                    >
+                      {theme.author.name
+                        ? theme.author.name
+                            .split(" ")
+                            .map((name) => name[0])
+                            .slice(0, 2)
+                            .join("")
+                            .toUpperCase() || "?"
+                        : "?"}{" "}
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-2xl font-semibold leading-tight tracking-tight">{theme.name}</h3>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm text-[var(--muted-foreground)]">
+                      by {theme.author.name || "Anonymous"}
+                    </p>
+                    <span className="text-[var(--muted-foreground)]">&middot;</span>
+                    <p className="text-sm font-medium">
+                      {theme.saveCount} {theme.saveCount === 1 ? "save" : "saves"}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="flex-1">
-                <h3 className="font-medium">{theme.name}</h3>
-                <p className="text-sm text-[var(--muted-foreground)]">
-                  by {theme.author.name || "Anonymous"}
-                </p>
-              </div>
-              <div className="flex gap-1.5">
-                <Tooltip content="Preview Theme">
-                  <button
-                    onClick={() => handlePreview(theme)}
-                    className="p-1.5 hover:bg-[var(--card)] rounded-lg transition-colors"
-                  >
-                    <Eye className="w-4 h-4" />
-                  </button>
-                </Tooltip>
-                <Tooltip content="Preview in Shadcn/ui">
-                  <a
-                    href={`/shadcn?${new URLSearchParams({
-                      primary: theme.colors.find((c) => c.name === "primary")?.value || "",
-                      ...(theme.visibleColors >= 2 && {
-                        secondary: theme.colors.find((c) => c.name === "secondary")?.value || "",
-                      }),
-                      ...(theme.visibleColors >= 3 && {
-                        accent: theme.colors.find((c) => c.name === "accent")?.value || "",
-                      }),
-                    }).toString()}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 hover:bg-[var(--card)] rounded-lg transition-colors inline-flex items-center justify-center"
-                  >
-                    <div className="relative">
-                      <Image
-                        src="https://github.com/shadcn.png"
-                        alt="shadcn/ui"
-                        width={16}
-                        height={16}
-                        className="rounded-full"
-                      />
-                      <div className="absolute -right-1 -bottom-1 bg-[var(--card-background)] rounded-full p-0.5">
-                        <Palette className="w-2 h-2 text-[var(--primary)]" />
+
+              {/* Colors Preview */}
+              <div className="flex-1 flex items-center gap-3">
+                {Array.isArray(theme.colors) && theme.colors.length > 0 ? (
+                  theme.colors.map((color) => (
+                    <Tooltip
+                      key={color.name}
+                      content={`${color.name} (${color.value})${
+                        theme.gradients?.some((g) => g.color === color.value && g.active)
+                          ? " • in gradient"
+                          : ""
+                      }`}
+                    >
+                      <div className="relative">
+                        <div
+                          className="w-24 h-28 rounded-lg cursor-help"
+                          style={{ backgroundColor: color.value }}
+                        />
+                        {theme.gradients?.some((g) => g.color === color.value && g.active) && (
+                          <div className="absolute -top-1 -right-1 w-5 h-5 bg-[var(--card-background)] rounded-full flex items-center justify-center">
+                            <Blend className="w-3 h-3 text-[var(--foreground)]" />
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </a>
-                </Tooltip>
-              </div>
-            </div>
-
-            <div className="flex gap-2 mb-4">
-              {Array.isArray(theme.colors) && theme.colors.length > 0 ? (
-                theme.colors.map((color) => (
-                  <Tooltip
-                    key={color.name}
-                    content={`${color.name} (${color.value})${
-                      theme.gradients?.some((g) => g.color === color.value && g.active)
-                        ? " • in gradient"
-                        : ""
-                    }`}
-                  >
-                    <div className="relative">
-                      <div
-                        className="w-12 h-12 rounded-lg cursor-help"
-                        style={{ backgroundColor: color.value }}
-                      />
-                      {theme.gradients?.some((g) => g.color === color.value && g.active) && (
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--card-background)] rounded-full flex items-center justify-center">
-                          <Blend className="w-3 h-3 text-[var(--primary)]" />
-                        </div>
-                      )}
-                    </div>
-                  </Tooltip>
-                ))
-              ) : (
-                <div className="text-sm text-[var(--muted-foreground)]">No colors defined</div>
-              )}
-            </div>
-
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-sm text-[var(--muted-foreground)]">{theme.saveCount} saves</span>
-              <button
-                onClick={() => handleSave(theme.id)}
-                disabled={!session || saving === theme.id}
-                className="px-4 py-2 bg-[var(--primary)] text-white rounded-lg disabled:opacity-50 flex items-center gap-2 hover:bg-[var(--primary-dark)] transition-colors"
-              >
-                {saving === theme.id ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                    </Tooltip>
+                  ))
                 ) : (
-                  <Save className="w-4 h-4" />
+                  <div className="text-sm text-[var(--muted-foreground)]">No colors defined</div>
                 )}
-                <span>Save Theme</span>
-              </button>
+              </div>
+
+              {/* Actions */}
+              <div className="flex md:flex-col gap-2 justify-end md:w-36">
+                <button
+                  onClick={() => handlePreview(theme)}
+                  style={{
+                    borderColor:
+                      theme.colors.find((c) => c.name === "primary")?.value || "var(--button-bordercolor)",
+                    ["--hover-color" as string]:
+                      theme.colors.find((c) => c.name === "primary")?.value || "var(--primary)",
+                  }}
+                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)]"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span className="hidden md:inline">Preview</span>
+                </button>
+
+                <a
+                  href={`/shadcn?${new URLSearchParams({
+                    primary: theme.colors.find((c) => c.name === "primary")?.value || "",
+                    ...(theme.visibleColors >= 2 && {
+                      secondary: theme.colors.find((c) => c.name === "secondary")?.value || "",
+                    }),
+                    ...(theme.visibleColors >= 3 && {
+                      accent: theme.colors.find((c) => c.name === "accent")?.value || "",
+                    }),
+                  }).toString()}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)]"
+                  style={{
+                    borderColor:
+                      theme.colors.find((c) => c.name === "secondary")?.value || "var(--button-bordercolor)",
+                    ["--hover-color" as string]:
+                      theme.colors.find((c) => c.name === "secondary")?.value || "var(--secondary)",
+                  }}
+                >
+                  <div className="relative">
+                    <Image
+                      src="https://github.com/shadcn.png"
+                      alt="shadcn/ui"
+                      width={16}
+                      height={16}
+                      className="rounded-full"
+                    />
+                    <div className="absolute -right-1 -bottom-1 bg-[var(--card-background)] rounded-full p-0.5">
+                      <Eye
+                        className="w-2 h-2"
+                        style={{
+                          color:
+                            theme.colors.find((c) => c.name === "secondary")?.value || "var(--secondary)",
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <span className="hidden md:inline">shadcn</span>
+                </a>
+
+                <button
+                  onClick={() => handleSave(theme.id)}
+                  disabled={!session || saving === theme.id}
+                  className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)]"
+                  style={{
+                    borderColor:
+                      theme.colors.find((c) => c.name === "accent")?.value || "var(--button-bordercolor)",
+                    ["--hover-color" as string]:
+                      theme.colors.find((c) => c.name === "accent")?.value || "var(--accent)",
+                  }}
+                >
+                  {saving === theme.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      <Save className="w-4 h-4" />
+                      <span className="hidden md:inline">Save</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </motion.div>
         ))}

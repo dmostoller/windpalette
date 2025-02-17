@@ -34,13 +34,13 @@ interface SidebarContentProps {
 }
 
 const navigationItems: NavigationItem[] = [
-  { id: "browse", icon: <SearchIcon /> },
-  { id: "colors", icon: <Palette className="w-5 h-5" /> },
+  { id: "create", icon: <Palette className="w-5 h-5" /> },
+  { id: "colors", icon: <SearchIcon /> },
+  { id: "archive", icon: <ArchiveIcon /> },
+  { id: "community", icon: <UsersIcon /> },
   { id: "components", icon: <LayoutPanelTopIcon /> },
   { id: "gradients", icon: <LayersIcon /> },
   { id: "buttons", icon: <SquareStackIcon /> },
-  { id: "archive", icon: <ArchiveIcon /> },
-  { id: "community", icon: <UsersIcon /> },
   { id: "help", icon: <CircleHelpIcon /> },
   { id: "user", icon: <UserIcon /> },
 ];
