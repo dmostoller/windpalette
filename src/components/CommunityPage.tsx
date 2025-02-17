@@ -38,7 +38,7 @@ export default function CommunityPage() {
   console.log(themes);
 
   const handleSave = async (themeId: string) => {
-    if (!session) {
+    if (!session?.user) {
       toast.error("Please sign in to save themes");
       return;
     }
@@ -274,7 +274,7 @@ export default function CommunityPage() {
 
                 <button
                   onClick={() => handleSave(theme.id)}
-                  disabled={!session || saving === theme.id}
+                  disabled={saving === theme.id}
                   className="p-2 border rounded-lg transition-colors flex items-center justify-center gap-2 hover:bg-[var(--hover-color)] hover:text-white group"
                   style={{
                     borderColor:
@@ -284,7 +284,7 @@ export default function CommunityPage() {
                   }}
                 >
                   {saving === theme.id ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-6 h-6 animate-spin" />
                   ) : (
                     <>
                       <Save className="w-4 h-4" />
