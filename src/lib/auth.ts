@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { redis } from "@/lib/redis";
 import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter";
+import { trackDailyUser } from "./stats"; // Add this import
 
 export const authOptions: NextAuthOptions = {
   adapter: UpstashRedisAdapter(redis),
@@ -15,6 +16,12 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    signIn: async ({ user }) => {
+      if (user?.id) {
+        await trackDailyUser(user.id);
+      }
+      return true;
+    },
     jwt: async ({ token, user }) => {
       if (user) {
         token.id = user.id;

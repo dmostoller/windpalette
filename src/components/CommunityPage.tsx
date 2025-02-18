@@ -19,8 +19,7 @@ export default function CommunityPage() {
   const [saving, setSaving] = useState<string | null>(null);
   const { data: session } = useSession();
   const { setThemeColors } = useTheme();
-  const ADMIN_EMAIL = "dmostoller@gmail.com";
-  const isAdmin = session?.user?.email === ADMIN_EMAIL;
+  const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
   useEffect(() => {
     const fetchThemes = async () => {

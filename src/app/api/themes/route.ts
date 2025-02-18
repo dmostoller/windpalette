@@ -2,6 +2,7 @@ import { saveTheme, getUserThemes, deleteTheme } from "@/lib/redis";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import { incrementSavedThemesCount } from "@/lib/stats";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -16,6 +17,8 @@ export async function POST(req: Request) {
     colors,
     gradients: gradients || { colors: [] },
   });
+
+  await incrementSavedThemesCount();
 
   return NextResponse.json({ success: true });
 }

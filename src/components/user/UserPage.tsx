@@ -3,21 +3,29 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { DeleteAccountModal } from "@/components/user/DeleteAccountModal";
 import ThemeSettings from "@/components/user/ThemeSettings";
-import { Settings, User, Palette, BarChart3, LogOut, Trash2 } from "lucide-react";
+import { Settings, User, Palette, BarChart3, LogOut, Trash2, ChartNoAxesCombined } from "lucide-react";
 import UserThemes from "@/components/user/UserThemes";
 import UserAnalytics from "@/components/user/UserAnalytics";
+import StatsPage from "./Stats";
 
 export default function UserPage() {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState("settings");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+
   const tabs = [
     { id: "settings", icon: Settings, label: "Settings" },
     { id: "themes", icon: Palette, label: "My Themes" },
     { id: "analytics", icon: BarChart3, label: "Analytics" },
     { id: "account", icon: User, label: "Account" },
+    ...(isAdmin ? [{ id: "stats", icon: ChartNoAxesCombined, label: "Stats" }] : []),
   ];
+
+  if (activeTab === "stats" && !isAdmin) {
+    setActiveTab("settings");
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -81,6 +89,7 @@ export default function UserPage() {
             </div>
           </div>
         )}
+        {activeTab === "stats" && isAdmin && <StatsPage />}
       </div>
 
       <DeleteAccountModal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} />
