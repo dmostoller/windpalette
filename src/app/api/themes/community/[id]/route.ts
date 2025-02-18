@@ -3,8 +3,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-const ADMIN_EMAIL = "dmostoller@gmail.com";
-
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Wait for session
@@ -12,7 +10,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     const resolvedParams = await Promise.resolve(params);
     const id = resolvedParams.id;
     // Check if user is admin
-    if (!session?.user || session.user.email !== ADMIN_EMAIL) {
+    if (!session?.user || session.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
       return NextResponse.json({ error: "Unauthorized - Admin access required" }, { status: 403 });
     }
 
