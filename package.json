@@ -31,7 +31,7 @@
     "lucide-react": "^0.469.0",
     "lz-string": "^1.5.0",
     "next": "15.1.3",
-    "next-auth": "^4.24.11",
+    "next-auth": "^4.24.12",
     "node-cache": "^5.1.2",
     "openai": "^4.82.0",
     "prisma": "^6.3.1",
